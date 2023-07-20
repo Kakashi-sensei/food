@@ -341,8 +341,8 @@ replace_unusual <- function(x) {
   # Replace values in ISO 8601 date-time format (YYYY-MM-DDTHH:MM:SS)
   x[grepl("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$", x)] <- NA
   
-  # Replace values equals to 1 or 2
-  x[x %in% c("0","1","2")] <- NA
+  # Replace values equals to 0
+  x[x %in% c("0")] <- NA
   
   return(x)
 }
@@ -372,5 +372,51 @@ rm(name_changes,new_name,new_names,old_name,old_names)
 datab<-merge(df,datac,by="EID")
 rm(df)
 write.csv(datab, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\food_contious.csv",na='',row.names=FALSE)
+rm(list=ls())
+```
+
+
+```{r}
+#get mean values for the continuous data
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\food_contious.csv')
+
+# List of variables
+variables <- c("Energy", "Protein", "Fat", "Carbohydrate", "SaturateFat", "PolyunsaturatFat", 
+               "Sugars", "EnglystDietaryFibre", "Iron", "VB6", "VB12", "Folate", 
+               "VC", "Potassium", "Magnesium", "Retinol", "Carotene", "VD", 
+               "Alcohol_continuous", "Starch", "Calcium", "VE")
+# Suffix for each variable
+suffix <- c("_1.0", "_2.0", "_3.0", "_4.0", "_0.0")
+# Loop through all variables
+for (var in variables) {
+  # Generate the column names for each variable
+  cols <- paste0(var, suffix)
+  # Check if columns exist in the dataframe
+  if (all(cols %in% colnames(df))) {
+    # Calculate the mean
+    df[[paste0(var, "_mean")]] <- rowMeans(df[, cols], na.rm = TRUE)
+  } else {
+    # Print a message if columns are not found in the dataframe
+    print(paste("Columns for variable", var, "not found in the dataframe."))
+  }
+}
+#removed the column from the dataframe
+# Create an empty vector to store all the column names
+cols_to_remove <- c()
+
+# Loop through all variables
+for (var in variables) {
+  
+  # Generate the column names for each variable
+  cols <- paste0(var, suffix)
+  
+  # Append to the list of columns to remove
+  cols_to_remove <- c(cols_to_remove, cols)
+}
+
+# Remove the columns from the dataframe
+df <- df[ , !(colnames(df) %in% cols_to_remove)]
+
+write.csv(df, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv",na='',row.names=FALSE)
 rm(list=ls())
 ```
