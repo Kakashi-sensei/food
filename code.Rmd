@@ -420,3 +420,42 @@ df <- df[ , !(colnames(df) %in% cols_to_remove)]
 write.csv(df, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv",na='',row.names=FALSE)
 rm(list=ls())
 ```
+
+```{r}
+#main effects test for continuous data
+install.packages("lme4")
+library(lme4)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv')
+# Fit the model
+df$APOE_all <- as.factor(df$APOE_all)
+df$T40_Gcar <- as.factor(df$T40_Gcar)
+df$family_history_AD <- as.factor(df$family_history_AD)
+df$Sex <- as.factor(df$Sex)
+df$AlcoholY08 <- as.factor(df$AlcoholY08)
+df$SmokingY08 <- as.factor(df$SmokingY08)
+df$Assessment_0 <- as.factor(df$Assessment_0)
+df$EID <- as.factor(df$EID)
+
+# Specify the dependent variables
+dependent_vars <- c("rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", 
+                    "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20")
+
+# Loop through each dependent variable and fit the model
+for (var in dependent_vars) {
+  
+  # Construct the formula
+  formula <- as.formula(paste(var, "~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                             BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend + Energy_mean + 
+                             (1 | Assessment_0)"))
+  
+  # Fit the model
+  model <- lmer(formula, data = df, REML=FALSE, 
+                control = lmerControl(optimizer = "Nelder_Mead", optCtrl = list(maxfun = 10000)))
+  
+  # Get the summary
+  print(paste("Summary for", var))
+  print(summary(model))
+}
+
+
+```
