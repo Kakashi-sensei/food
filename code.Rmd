@@ -475,3 +475,98 @@ for (dep_var in dependent_vars) {
 write.csv(results, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\output\\maineffect_continuous.csv",na='',row.names=FALSE)
 rm(list=ls())
 ```
+
+```{r}
+#interaction test for continuous data
+library(lmerTest)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv')
+
+# Fit the model -- factor all factor variables
+factor_vars <- c("AlcoholY08", "SmokingY08", "Assessment_0", "EID")
+for (var in factor_vars) {
+  df[[var]] <- as.factor(df[[var]])
+}
+rm(factor_vars,var)
+
+# Scale all continuous variables
+scale_vars <- c("Energy_mean", "Protein_mean", "Fat_mean", "Carbohydrate_mean", "SaturateFat_mean", 
+               "PolyunsaturatFat_mean", "Sugars_mean", "EnglystDietaryFibre_mean", "Iron_mean", "VB6_mean", 
+               "VB12_mean", "Folate_mean", "VC_mean", "Potassium_mean", "Magnesium_mean", "Retinol_mean", 
+               "Carotene_mean", "VD_mean", "Alcohol_continuous_mean", "Starch_mean", "Calcium_mean", "VE_mean", 
+               "rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", "rsfMRI_Component10", 
+               "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20", "Age_Baseline", "BMI_Y08andY12andY14_mean")
+
+for (var in scale_vars) {
+  df[[var]] <- scale(df[[var]])
+}
+rm(scale_vars, var)
+
+# Define the dependent variables
+dependent_vars <- c("rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", 
+                    "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20")
+
+# List of variables to test
+test_vars <- c("Energy_mean", "Protein_mean", "Fat_mean", "Carbohydrate_mean", "SaturateFat_mean", 
+               "PolyunsaturatFat_mean", "Sugars_mean", "EnglystDietaryFibre_mean", "Iron_mean", "VB6_mean", 
+               "VB12_mean", "Folate_mean", "VC_mean", "Potassium_mean", "Magnesium_mean", "Retinol_mean", 
+               "Carotene_mean", "VD_mean", "Alcohol_continuous_mean", "Starch_mean", "Calcium_mean", "VE_mean")
+
+# List of factors
+factor_vars <- c("APOE_all", "T40_Gcar", "family_history_AD")
+
+# Initialize a results data frame
+results <- data.frame()
+
+# Loop over each dependent variable
+for(factor_var in factor_vars) {
+ for (dep_var in dependent_vars) {
+  for (test_var in test_vars) {
+      
+    # Construct the formula
+    formula <- as.formula(paste(dep_var, "~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                               BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend +", factor_var, ":", test_var, "+ 
+                               (1 | Assessment_0)"))
+  
+    # Fit the model
+    model <- lmer(formula, data = df, REML=FALSE)
+
+    # Get the summary
+    model_summary <- summary(model)
+   
+    # Extract the results for the interaction term
+    interaction_term <- paste(factor_var, test_var, sep=":")
+    estimate <- model_summary$coefficients[interaction_term, "Estimate"]
+    std_error <- model_summary$coefficients[interaction_term, "Std. Error"]
+    p_value <- model_summary$coefficients[interaction_term, "Pr(>|t|)"]
+
+    # Add the results to the data frame
+    results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Test_Variable = test_var,
+                                         Estimate = estimate,
+                                         Std_Error = std_error,
+                                         P_Value = p_value))
+    }
+  }
+}
+write.csv(results, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\output\\interactions_continuous.csv",na='',row.names=FALSE)
+rm(list=ls())
+```
+
+
+```{r}
+#work on food_liquids
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\food_liquids.csv')
+# replace invalid values with NA
+variables <- c("Water-1.0", "Water-2.0", "Water-3.0", "Water-4.0", "Water-0.0",
+               "LowCalorie-1.0", "LowCalorie-2.0", "LowCalorie-3.0", "LowCalorie-4.0", "LowCalorie-0.0",
+               "Fizzy-1.0", "Fizzy-2.0", "Fizzy-3.0", "Fizzy-4.0", "Fizzy-0.0",
+               "Squash-1.0", "Squash-2.0", "Squash-3.0", "Squash-4.0", "Squash-0.0",
+               "OrangeJuice-1.0", "OrangeJuice-2.0", "OrangeJuice-3.0", "OrangeJuice-4.0", "OrangeJuice-0.0",
+               "GrapeJuice-1.0", "GrapeJuice-2.0", "GrapeJuice-3.0", "GrapeJuice-4.0", "GrapeJuice-0.0",
+               "FruitVegeJuice-1.0", "FruitVegeJuice-2.0", "FruitVegeJuice-3.0", "FruitVegeJuice-4.0", "FruitVegeJuice-0.0",
+               "FruitSmoothie-1.0", "FruitSmoothie-2.0", "FruitSmoothie-3.0", "FruitSmoothie-4.0", "FruitSmoothie-0.0",
+               "DairySmoothie-1.0", "DairySmoothie-2.0", "DairySmoothie-3.0", "DairySmoothie-4.0", "DairySmoothie-0.0")
+# invalid values are with decimal
+df[, variables] <- lapply(df[, variables], function(x) ifelse(x == floor(x), x, NA))
+
+```
