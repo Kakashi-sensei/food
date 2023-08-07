@@ -242,29 +242,29 @@ df <- read.csv(file = 'C:/Users/timothy/Documents/GWAS_data/dairy/data12_grain_d
 df <- rename(df, "EID" = "eid")
 
 # Define a named vector where names are the old column name parts, and the values are the new ones
-name_changes <- c("100940" = "Bread", "100950" = "SlicedBread", "101020" = "Baguette", "101090" = "Bap",
-                  "101160" = "Breadroll", "101230" = "Naanbread", "101240" = "Garlicbread", 
-                  "101250" = "Crispbread", "101260" = "Oatcakes", "101270" = "Otherbread", 
-                  "101300" = "Butteronbread", "101310" = "NumberofsliceswithButt", "101350" = "NumberbaguettewithButt", 
-                  "101390" = "NumberbapwithButt", "101430" = "NumberbreadrollwithButt", "101470" = "NumbercrackerwithButt",
-                  "101510" = "NumberoatcakewithButt", "101550" = "NumberOthbreadwithButt", "101970" = "DoubleCrustPastry",
-                  "101980" = "SingleCrustPastry", "101990" = "Crumble", "102000" = "Pizza",
-                  "102010" = "Pancake", "102020" = "ScotchPancake", "102030" = "YorkshirePudd",
-                  "102040" = "IndiaSnack", "102050" = "Croissant", "102060" = "DanishPastry", 
-                  "102070" = "Scone", "102080" = "Yogurt_IcecreamConsum", "102090" = "Yogurt",
-                  "102120" = "Icecream", "102130" = "DessertConsum", "102140" = "MilkPuddin",
-                  "102170" = "Soya", "102180" = "Fruitcake", "102190" = "Cake", "102200" = "Doughnut", 
-                  "102210" = "Spongepuddin", "102220" = "Cheesecake", "102230" = "Othdessert", 
-                  "102250" = "SweetsnackConsum", "102260" = "Chocolatebar", "102270" = "WhiteChocolate", 
-                  "102280" = "MilkChocolate", "102290" = "DarkChocolate", "102300" = "ChocolateRaisin", 
-                  "102310" = "Chocolatesweet", "102320" = "Dietsweet", "102330" = "Sweets", 
-                  "102340" = "ChocolateCoverBiscuit", "102350" = "ChocolateBiscuit", "102360" = "SweetBiscuit", 
-                  "102370" = "CerealBar", "102380" = "OthSweet", "102400" = "Savoury", "102410" = "SaltPeanut", 
-                  "102420" = "Peanut", "102430" = "SaltNut", "102440" = "Nut", "102450" = "Seeds", "102460" = "Crisp", 
-                  "102470" = "SavouryBiscuit", "102480" = "CheesyBiscuit", "102490" = "Olives", "102500" = "OthSavoury", 
-                  "102520" = "SoupConsum", "102530" = "InstantSoup", "102540" = "CannnedSoup", "102620" = "HomeSoup", 
-                  "102700" = "StarchyConsum", "102710" = "WhitePasta", "102720" = "WholemealPasta", "102730" = "WhiteRice", 
-                  "102740" = "BrownRice", "102750" = "Sushi", "102760" = "Snackpot", "102770" = "Couscous", "102780" = "OthGrain")
+name_changes <- c("100940-" = "Bread_", "100950-" = "SlicedBread_", "101020-" = "Baguette_", "101090-" = "Bap_",
+                  "101160-" = "Breadroll_", "101230-" = "Naanbread_", "101240-" = "Garlicbread_", 
+                  "101250-" = "Crispbread_", "101260-" = "Oatcakes_", "101270-" = "Otherbread_", 
+                  "101300-" = "Butteronbread_", "101310-" = "NumberofsliceswithButt_", "101350-" = "NumberbaguettewithButt_", 
+                  "101390-" = "NumberbapwithButt_", "101430-" = "NumberbreadrollwithButt_", "101470-" = "NumbercrackerwithButt_",
+                  "101510-" = "NumberoatcakewithButt_", "101550-" = "NumberOthbreadwithButt_", "101970-" = "DoubleCrustPastry_",
+                  "101980-" = "SingleCrustPastry_", "101990-" = "Crumble_", "102000-" = "Pizza_",
+                  "102010-" = "Pancake_", "102020-" = "ScotchPancake_", "102030-" = "YorkshirePudd_",
+                  "102040-" = "IndiaSnack_", "102050-" = "Croissant_", "102060-" = "DanishPastry_", 
+                  "102070-" = "Scone_", "102080-" = "Yogurt_IcecreamConsum_", "102090-" = "Yogurt_",
+                  "102120-" = "Icecream_", "102130-" = "DessertConsum_", "102140-" = "MilkPuddin_",
+                  "102170-" = "Soya_", "102180-" = "Fruitcake_", "102190-" = "Cake_", "102200-" = "Doughnut_", 
+                  "102210-" = "Spongepuddin_", "102220-" = "Cheesecake_", "102230-" = "Othdessert_", 
+                  "102250-" = "SweetsnackConsum_", "102260-" = "Chocolatebar_", "102270-" = "WhiteChocolate_", 
+                  "102280-" = "MilkChocolate_", "102290-" = "DarkChocolate_", "102300-" = "ChocolateRaisin_", 
+                  "102310-" = "Chocolatesweet_", "102320-" = "Dietsweet_", "102330-" = "Sweets_", 
+                  "102340-" = "ChocolateCoverBiscuit_", "102350-" = "ChocolateBiscuit_", "102360-" = "SweetBiscuit_", 
+                  "102370-" = "CerealBar_", "102380-" = "OthSweet_", "102400-" = "Savoury_", "102410-" = "SaltPeanut_", 
+                  "102420-" = "Peanut_", "102430-" = "SaltNut_", "102440-" = "Nut_", "102450-" = "Seeds_", "102460-" = "Crisp_", 
+                  "102470-" = "SavouryBiscuit_", "102480-" = "CheesyBiscuit_", "102490-" = "Olives_", "102500-" = "OthSavoury_", 
+                  "102520-" = "SoupConsum_", "102530-" = "InstantSoup_", "102540-" = "CannnedSoup_", "102620-" = "HomeSoup_", 
+                  "102700-" = "StarchyConsum_", "102710-" = "WhitePasta_", "102720-" = "WholemealPasta_", "102730-" = "WhiteRice_", 
+                  "102740-" = "BrownRice_", "102750-" = "Sushi_", "102760-" = "Snackpot_", "102770-" = "Couscous_", "102780-" = "OthGrain_")
 # Iterate over name_changes
 for (old_name in names(name_changes)) {
   new_name = name_changes[old_name]
@@ -279,38 +279,38 @@ rm(df)
 write.csv(datab, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\food_grain_dessert.csv",na='',row.names=FALSE)
 rm(datab)
 
-# get data13 -- grain_dessert data done
+# get data13 -- meat/vege data done
 # Read the data13
 df <- read.csv(file = 'C:/Users/timothy/Documents/GWAS_data/dairy/data13_meat_vege.csv', check.names = FALSE)
 df <- rename(df, "EID" = "eid")
 
 # Define a named vector where names are the old column name parts, and the values are the new ones
-name_changes <- c("102930" = "EggConsum", "102940" = "WholeEgg", "102950" = "Omelette", "102960" = "EgginSandwich",
-                  "102970" = "ScotchEgg", "102980" = "OthEgg", "103000" = "MeatConsum", 
-                  "103010" = "Sausage", "103020" = "Beef", "103030" = "Pork", 
-                  "103040" = "Lamb", "103050" = "CrumbPoultry", "103060" = "Poultry", 
-                  "103070" = "Bacon", "103080" = "Ham", "103090" = "Liver",
-                  "103100" = "OthMeat", "103120" = "FatRemoveMeat", "103130" = "SkinRemovdPoultry", 
-                  "103140" = "FishConsum", "103150" = "TinTuna", "103160" = "OilyFish", 
-                  "103170" = "BreadFish", "103180" = "BatteredFish", "103190" = "WhiteFish", 
-                  "103200" = "Prawns", "103210" = "LobsterCrab", "103220" = "Shellfish", 
-                  "103230" = "OthFish", "103250" = "VegeAlter", "103260" = "VegeSausage", 
-                  "103270" = "Tofu", "103280" = "Quorn", "103290" = "OthVegeAlter", "103310" = "SpreadConsum", 
-                  "103980" = "NoFatCook", "103990" = "VegeConsum", "104000" = "BakeBean", "104010" = "Pulse", 
-                  "104020" = "FriedPotato", "104030" = "BoilPotato", "104040" = "ButterAddPotato", 
-                  "104050" = "MashPotato", "104060" = "MixVege", "104070" = "VegePiece", 
-                  "104080" = "Coleslaw", "104090" = "SideSalad", "104100" = "Avocado", "104110" = "BroadBean", 
-                  "104120" = "GreenBean", "104130" = "Beetroot", "104140" = "Broccoli", "104150" = "Butternut", 
-                  "104160" = "Cabbage", "104170" = "Carrot", "104180" = "Cauliflower", "104190" = "Celery", "104200" = "Courgette", 
-                  "104210" = "Cucumber", "104220" = "Garlic", "104230" = "Leek", "104240" = "Lettuce", "104250" = "Mushroom", 
-                  "104260" = "Onion", "104270" = "Parsnip", "104280" = "Pea", "104290" = "Sweetpepper", "104300" = "Spinach", 
-                  "104310" = "Sprouts", "104320" = "Sweetcorn", "104330" = "Sweetpotato", "104340" = "FreshTomato", 
-                  "104350" = "TinTomato", "104360" = "Turnip", "104370" = "Watercress", "104380" = "OthVege", 
-                  "104400" = "FruitConsum", "104410" = "StewedFruit", "104420" = "Prune", "104430" = "DriedFruit", 
-                  "104440" = "MixFruit", "104450" = "Apple", "104460" = "Banana", "104470" = "Berry", "104480" = "Cherry", 
-                  "104490" = "Grapefruit", "104500" = "Grape", "104510" = "Mango", "104520" = "Melon", "104530" = "Orange", 
-                  "104540" = "Satsuma", "104550" = "Peach", "104560" = "Pear", "104570" = "Pineapple", "104580" = "Plum", 
-                  "104590" = "OthFruit", "104660" = "AddSalt", "104670" = "VitaminSupplement")
+name_changes <- c("102930-" = "EggConsum_", "102940-" = "WholeEgg_", "102950-" = "Omelette_", "102960-" = "EgginSandwich_",
+                  "102970-" = "ScotchEgg_", "102980-" = "OthEgg_", "103000-" = "MeatConsum_", 
+                  "103010-" = "Sausage_", "103020-" = "Beef_", "103030-" = "Pork_", 
+                  "103040-" = "Lamb_", "103050-" = "CrumbPoultry_", "103060-" = "Poultry_", 
+                  "103070-" = "Bacon_", "103080-" = "Ham_", "103090-" = "Liver_",
+                  "103100-" = "OthMeat_", "103120-" = "FatRemoveMeat_", "103130-" = "SkinRemovdPoultry_", 
+                  "103140-" = "FishConsum_", "103150-" = "TinTuna_", "103160-" = "OilyFish_", 
+                  "103170-" = "BreadFish_", "103180-" = "BatteredFish_", "103190-" = "WhiteFish_", 
+                  "103200-" = "Prawns_", "103210-" = "LobsterCrab_", "103220-" = "Shellfish_", 
+                  "103230-" = "OthFish_", "103250-" = "VegeAlter_", "103260-" = "VegeSausage_", 
+                  "103270-" = "Tofu_", "103280-" = "Quorn_", "103290-" = "OthVegeAlter_", "103310-" = "SpreadConsum_", 
+                  "103980-" = "NoFatCook_", "103990-" = "VegeConsum_", "104000-" = "BakeBean_", "104010-" = "Pulse_", 
+                  "104020-" = "FriedPotato_", "104030-" = "BoilPotato_", "104040-" = "ButterAddPotato_", 
+                  "104050-" = "MashPotato_", "104060-" = "MixVege_", "104070-" = "VegePiece_", 
+                  "104080-" = "Coleslaw_", "104090-" = "SideSalad_", "104100-" = "Avocado_", "104110-" = "BroadBean_", 
+                  "104120-" = "GreenBean_", "104130-" = "Beetroot_", "104140-" = "Broccoli_", "104150-" = "Butternut_", 
+                  "104160-" = "Cabbage_", "104170-" = "Carrot_", "104180-" = "Cauliflower_", "104190-" = "Celery_", "104200-" = "Courgette_", 
+                  "104210-" = "Cucumber_", "104220-" = "Garlic_", "104230-" = "Leek_", "104240-" = "Lettuce_", "104250-" = "Mushroom_", 
+                  "104260-" = "Onion_", "104270-" = "Parsnip_", "104280-" = "Pea_", "104290-" = "Sweetpepper_", "104300-" = "Spinach_", 
+                  "104310-" = "Sprouts_", "104320-" = "Sweetcorn_", "104330-" = "Sweetpotato_", "104340-" = "FreshTomato_", 
+                  "104350-" = "TinTomato_", "104360-" = "Turnip_", "104370-" = "Watercress_", "104380-" = "OthVege_", 
+                  "104400-" = "FruitConsum_", "104410-" = "StewedFruit_", "104420-" = "Prune_", "104430-" = "DriedFruit_", 
+                  "104440-" = "MixFruit_", "104450-" = "Apple_", "104460-" = "Banana_", "104470-" = "Berry_", "104480-" = "Cherry_", 
+                  "104490-" = "Grapefruit_", "104500-" = "Grape_", "104510-" = "Mango_", "104520-" = "Melon_", "104530-" = "Orange_", 
+                  "104540-" = "Satsuma_", "104550-" = "Peach_", "104560-" = "Pear_", "104570-" = "Pineapple_", "104580-" = "Plum_", 
+                  "104590-" = "OthFruit_", "104660-" = "AddSalt_", "104670-" = "VitaminSupplement_")
 
 # Iterate over name_changes
 for (old_name in names(name_changes)) {
