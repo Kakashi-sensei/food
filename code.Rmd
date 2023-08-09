@@ -759,45 +759,64 @@ valid_soup_values <- c(1, 2, 3, 400, 555)
 valid_starchy_values <- c(1,200, 500)
 valid_cvalues <- c(0, 1)
 # only keep valid values for wanted variables
-df[, variables] <- lapply(df[, variables], function(x) ifelse(x %in% valid_jvalues, x, NA))
-
-df[, variables] <- lapply(df[, variables], function(x) ifelse(x %in% valid_jvalues, x, NA))
-
-df[, variables] <- lapply(df[, variables], function(x) ifelse(x %in% valid_jvalues, x, NA))
-
-df[, variables] <- lapply(df[, variables], function(x) ifelse(x %in% valid_jvalues, x, NA))
-
-df[, variables] <- lapply(df[, variables], function(x) ifelse(x %in% valid_jvalues, x, NA))
-
-df[, variables] <- lapply(df[, variables], function(x) ifelse(x %in% valid_jvalues, x, NA))
-
-df[, variables] <- lapply(df[, variables], function(x) ifelse(x %in% valid_jvalues, x, NA))
-
+df[, bread_variables] <- lapply(df[, bread_variables], function(x) ifelse(x %in% valid_bread_values, x, NA))
+df[, nubread_variables] <- lapply(df[, nubread_variables], function(x) ifelse(x %in% valid_bread_values, x, NA))
+df[, pie_variables] <- lapply(df[, pie_variables], function(x) ifelse(x %in% valid_pie_values, x, NA))
+df[, dessert_variables] <- lapply(df[, dessert_variables], function(x) ifelse(x %in% vvalid_dessert_values, x, NA))
+df[, sweet_variables] <- lapply(df[, sweet_variables], function(x) ifelse(x %in% valid_sweet_values, x, NA))
+df[, savoury_variables] <- lapply(df[, savoury_variables], function(x) ifelse(x %in% valid_savoury_values, x, NA))
+df[, soup_variables] <- lapply(df[, soup_variables], function(x) ifelse(x %in% valid_soup_values, x, NA))
+df[, starchy_variables] <- lapply(df[, starchy_variables], function(x) ifelse(x %in% valid_cvalues, x, NA))
 # only keep valid values for consumption variables
 df[, cvariables] <- lapply(df[, cvariables], function(x) ifelse(x %in% valid_cvalues, x, NA))
-# remove unwanted variables
-library(dplyr)
-# variables to remove
-variables_to_remove <- c("AddMilkFilterCoffee_1.0", "AddMilkFilterCoffee_2.0", "AddMilkFilterCoffee_3.0", 
-                         "AddMilkFilterCoffee_4.0", "AddMilkFilterCoffee_0.0", "AddMilkCoffee_1.0", 
-                         "AddMilkCoffee_2.0", "AddMilkCoffee_3.0", "AddMilkCoffee_4.0", "AddMilkCoffee_0.0",
-                         "SugarAddtoCoffee_1.0", "SugarAddtoCoffee_2.0", "SugarAddtoCoffee_3.0", 
-                         "SugarAddtoCoffee_4.0", "SugarAddtoCoffee_0.0", "ArtificialSweettoCoffee_1.0", "ArtificialSweettoCoffee_2.0",
-                         "ArtificialSweettoCoffee_3.0", "ArtificialSweettoCoffee_4.0", "ArtificialSweettoCoffee_0.0", 
-                         "AddMilkStandTea_1.0", "AddMilkStandTea_2.0", "AddMilkStandTea_3.0", "AddMilkStandTea_4.0", 
-                         "AddMilkStandTea_0.0", "DecaffeinTea_1.0", "DecaffeinTea_2.0", "DecaffeinTea_3.0", 
-                         "DecaffeinTea_4.0", "DecaffeinTea_0.0", "AddMilkRooibos_1.0", "AddMilkRooibos_2.0", 
-                         "AddMilkRooibos_3.0", "AddMilkRooibos_4.0", "AddMilkRooibos_0.0", "SugarToTea_1.0", 
-                         "SugarToTea_2.0", "SugarToTea_3.0", "SugarToTea_4.0", "SugarToTea_0.0", "ArtificialSweetTea_1.0", 
-                         "ArtificialSweetTea_2.0", "ArtificialSweetTea_3.0", "ArtificialSweetTea_4.0", "ArtificialSweetTea_0.0")
-df <- df %>% select(-one_of(variables_to_remove))
+rm(cvariables)
 # replace "555" and "600"
-df[, variables] <- lapply(df[, variables], function(x) { 
+df[, bread_variables] <- lapply(df[, bread_variables], function(x) { 
     x <- ifelse(x == 555, 0.5, x) 
     x <- ifelse(x == 600, 6, x)
     x
 })
-rm(cvariables, valid_cvalues, valid_jvalues, variables, variables_to_remove)
+df[, nubread_variables] <- lapply(df[, nubread_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 600, 6, x)
+    x
+})
+df[, pie_variables] <- lapply(df[, pie_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+df[, dessert_variables] <- lapply(df[, dessert_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 300, 3, x)
+    x
+})
+df[, sweet_variables] <- lapply(df[, sweet_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 500, 5, x)
+    x <- ifelse(x == 444, 0.25, x)
+    x
+})
+df[, savoury_variables] <- lapply(df[, savoury_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 300, 3, x)
+    x
+})
+df[, soup_variables] <- lapply(df[, soup_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+df[, starchy_variables] <- lapply(df[, starchy_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+
+
+
+
+rm(valid_cvalues, valid_jvalues, variables, variables_to_remove)
 # List of variables
 variables <- c("Water", "LowCalorie", "Fizzy", "Squash", "OrangeJuice", "GrapeJuice", "FruitVegeJuice", "FruitSmoothie", "DairySmoothie", "InstantCoffee", "FilterCoffee", "Cappuccino", "Latte", "Espresso", "OtherCoffee", "LCalorieHotChocolate", "HChocolate")
 # Suffix for each variable
@@ -813,6 +832,10 @@ for (var in variables) {
   }
 }
 rm(cols, suffix, var, variables)
+
+
+
+
 
 # merge juice and coffee
 # 1. merge juice:
