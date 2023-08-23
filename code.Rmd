@@ -668,7 +668,7 @@ rm(list=ls())
 
 ```{r}
 # get the grain_dessert data ready to go
-df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_liquids.csv')
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\food_grain_dessert.csv')
 # remove invalid values
 # wanted variables
 bread_variables <- c("SlicedBread_1.0", "SlicedBread_2.0", "SlicedBread_3.0", "SlicedBread_4.0", "SlicedBread_0.0",
@@ -756,13 +756,80 @@ valid_dessert_values <- c(1, 2, 300, 555)
 valid_sweet_values <- c(1, 2, 3, 4, 500, 444, 555)
 valid_savoury_values <- c(1, 2, 300, 555)
 valid_soup_values <- c(1, 2, 3, 400, 555)
-valid_starchy_values <- c(1,200, 500)
+valid_starchy_values <- c(1,200, 555)
 valid_cvalues <- c(0, 1)
 # only keep valid values for wanted variables
 df[, bread_variables] <- lapply(df[, bread_variables], function(x) ifelse(x %in% valid_bread_values, x, NA))
 df[, nubread_variables] <- lapply(df[, nubread_variables], function(x) ifelse(x %in% valid_bread_values, x, NA))
 df[, pie_variables] <- lapply(df[, pie_variables], function(x) ifelse(x %in% valid_pie_values, x, NA))
-df[, dessert_variables] <- lapply(df[, dessert_variables], function(x) ifelse(x %in% vvalid_dessert_values, x, NA))
+df[, dessert_variables] <- lapply(df[, dessert_variables], function(x) ifelse(x %in% valid_dessert_values, x, NA))
+df[, sweet_variables] <- lapply(df[, sweet_variables], function(x) ifelse(x %in% valid_sweet_values, x, NA))
+df[, savoury_variables] <- lapply(df[, savoury_variables], function(x) ifelse(x %in% valid_savoury_values, x, NA))
+df[, soup_variables] <- lapply(df[, soup_variables], function(x) ifelse(x %in% valid_soup_values, x, NA))
+df[, starchy_variables] <- lapply(df[, starchy_variables], function(x) ifelse(x %in% valid_starchy_values, x, NA))
+df[, cvariables] <- lapply(df[, cvariables], function(x) ifelse(x %in% valid_cvalues, x, NA))
+
+# replace values
+df[, bread_variables] <- lapply(df[, bread_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 600, 6, x)
+    x
+})
+
+df[, nubread_variables] <- lapply(df[, nubread_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 600, 6, x)
+    x
+})
+
+
+df[, pie_variables] <- lapply(df[, pie_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+
+df[, dessert_variables] <- lapply(df[, dessert_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 300, 3, x)
+    x
+})
+
+df[, sweet_variables] <- lapply(df[, sweet_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 500, 5, x)
+    x <- ifelse(x == 444, 0.25, x)
+    x
+})
+
+df[, savoury_variables] <- lapply(df[, savoury_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 300, 3, x)
+    x
+})
+
+df[, soup_variables] <- lapply(df[, soup_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+
+df[, starchy_variables] <- lapply(df[, starchy_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 200, 2, x)
+    x
+})
+
+
+
+
+
+missing_columns <- dessert_variables[!(dessert_variables %in% colnames(df))]
+
+print(missing_columns)
+
+
+df[, dessert_variables] <- lapply(df[, dessert_variables], function(x) ifelse(x %in% valid_dessert_values, x, NA))
 df[, sweet_variables] <- lapply(df[, sweet_variables], function(x) ifelse(x %in% valid_sweet_values, x, NA))
 df[, savoury_variables] <- lapply(df[, savoury_variables], function(x) ifelse(x %in% valid_savoury_values, x, NA))
 df[, soup_variables] <- lapply(df[, soup_variables], function(x) ifelse(x %in% valid_soup_values, x, NA))
