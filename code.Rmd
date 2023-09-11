@@ -697,7 +697,14 @@ nubread_variables <- c("NumberofsliceswithButt_1.0", "NumberofsliceswithButt_2.0
 pie_variables <- c("DoubleCrustPastry_1.0", "DoubleCrustPastry_2.0", "DoubleCrustPastry_3.0", "DoubleCrustPastry_4.0", "DoubleCrustPastry_0.0",
                    "SingleCrustPastry_1.0", "SingleCrustPastry_2.0", "SingleCrustPastry_3.0", "SingleCrustPastry_4.0", "SingleCrustPastry_0.0",
                    "Crumble_1.0", "Crumble_2.0", "Crumble_3.0", "Crumble_4.0", "Crumble_0.0", 
-                   "Pizza_1.0", "Pizza_2.0", "Pizza_3.0", "Pizza_4.0", "Pizza_0.0")
+                   "Pizza_1.0", "Pizza_2.0", "Pizza_3.0", "Pizza_4.0", "Pizza_0.0",
+                   "Pancake_1.0","Pancake_2.0","Pancake_3.0","Pancake_4.0","Pancake_0.0",
+                   "ScotchPancake_1.0","ScotchPancake_2.0","ScotchPancake_3.0","ScotchPancake_4.0","ScotchPancake_0.0",
+                   "YorkshirePudd_1.0","YorkshirePudd_2.0","YorkshirePudd_3.0","YorkshirePudd_4.0","YorkshirePudd_0.0",
+                   "IndiaSnack_1.0","IndiaSnack_2.0","IndiaSnack_3.0","IndiaSnack_4.0","IndiaSnack_0.0",
+                   "Croissant_1.0","Croissant_2.0","Croissant_3.0","Croissant_4.0","Croissant_0.0",
+                   "DanishPastry_1.0","DanishPastry_2.0","DanishPastry_3.0","DanishPastry_4.0","DanishPastry_0.0",
+                   "Scone_1.0","Scone_2.0","Scone_3.0","Scone_4.0","Scone_0.0")
 
 dessert_variables <- c("Yogurt_1.0", "Yogurt_2.0", "Yogurt_3.0", "Yogurt_4.0", "Yogurt_0.0", 
                        "Icecream_1.0", "Icecream_2.0", "Icecream_3.0", "Icecream_4.0", "Icecream_0.0", 
@@ -814,7 +821,7 @@ df[, starchy_variables] <- lapply(df[, starchy_variables], function(x) {
 rm(valid_bread_values, valid_pie_values,valid_dessert_values, valid_sweet_values, valid_savoury_values, valid_soup_values, valid_starchy_values, valid_cvalues)
 
 # List of variables
-variables <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread", "NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt", "DoubleCrustPastry", "SingleCrustPastry", "Crumble", "Pizza", "Pancake", "ScotchPancake", "YorkshirePudd", "IndiaSnack", "Croissant", "DanishPastry", "Scone", "Yogurt", "Icecream", "MilkPuddin", "OthMilkPuddin", "Soya", "Fruitcake", "Cake", "Doughnut", "Spongepuddin", "Cheesecake", "Othdessert", "Chocolatebar", "WhiteChocolate", "MilkChocolate", "DarkChocolate", "ChocolateRaisin", "Chocolatesweet", "Dietsweet", "Sweets", "ChocolateCoverBiscuit", "ChocolateBiscuit", "SweetBiscuit", "CerealBar", "OthSweet", "SaltPeanut", "Peanut", "SaltNut", "Nut", "Seeds", "Crisp", "SavouryBiscuit", "CheesyBiscuit", "Olives", "OthSavoury", "InstantSoup", "CannnedSoupHomeSoup", "WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi Snackpot", "Couscous", "OthGrain")
+variables <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread", "NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt", "DoubleCrustPastry", "SingleCrustPastry", "Crumble", "Pizza", "Pancake", "ScotchPancake", "YorkshirePudd", "IndiaSnack", "Croissant", "DanishPastry", "Scone", "Yogurt", "Icecream", "MilkPuddin", "OthMilkPuddin", "Soya", "Fruitcake", "Cake", "Doughnut", "Spongepuddin", "Cheesecake", "Othdessert", "Chocolatebar", "WhiteChocolate", "MilkChocolate", "DarkChocolate", "ChocolateRaisin", "Chocolatesweet", "Dietsweet", "Sweets", "ChocolateCoverBiscuit", "ChocolateBiscuit", "SweetBiscuit", "CerealBar", "OthSweet", "SaltPeanut", "Peanut", "SaltNut", "Nut", "Seeds", "Crisp", "SavouryBiscuit", "CheesyBiscuit", "Olives", "OthSavoury", "InstantSoup", "CannnedSoup", "HomeSoup", "WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi Snackpot", "Couscous", "OthGrain")
 
 
 # Suffix for each variable
@@ -831,8 +838,6 @@ for (var in variables) {
 }
 rm(cols, suffix, var, variables, bread_variables, nubread_variables, pie_variables, dessert_variables, sweet_variables, savoury_variables, soup_variables, starchy_variables, cvariables)
 
-
-
 # merge variables
 # 1. merge bread:
 bread_vars <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread")
@@ -848,7 +853,7 @@ for(suffix in suffixes) {
 # Calculate row mean of juice
 df$bread_mean <- rowMeans(df[, paste("bread", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove juice_* columns
+# Remove bread_* columns
 df <- df[ , !(names(df) %in% paste("bread", suffixes, sep="_"))]
 rm(columns, bread_vars, new_column, suffix)
 
@@ -864,18 +869,28 @@ for(suffix in suffixes) {
 # Calculate row mean of breadWithButt
 df$breadWithButt_mean <- rowMeans(df[, paste("breadWithButt", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove coffee_* columns
+# Remove breadWithButt_* columns
 df <- df[ , !(names(df) %in% paste("breadWithButt", suffixes, sep="_"))]
 rm(columns, breadWithButt_vars, new_column, suffix)
 
+# 3. merge all bread:
+breadall_vars <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread", "NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt")
+# calculate breadall_* variables
+for(suffix in suffixes) {
+  columns <- paste(breadall, suffix, sep="_") # creates a vector of column names with current suffix
+  new_column <- paste("breadall", suffix, sep="_") # creates a name for new column
+  df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
+}
 
+# Calculate row mean of breadall
+df$breadall_mean <- rowMeans(df[, paste("breadall", suffixes, sep="_")], na.rm = TRUE)
 
+# Remove breadall_* columns
+df <- df[ , !(names(df) %in% paste("breadall", suffixes, sep="_"))]
+rm(columns, breadall_vars, new_column, suffix)
 
-
-
-
-# 3. merge pie:
-pie_vars <- c("NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthpie")
+# 4. merge pie:
+pie_vars <- c("DoubleCrustPastry", "SingleCrustPastry", "Crumble", "Pizza", "Pancake", "ScotchPancake", "YorkshirePudd", "IndiaSnack", "Croissant", "DanishPastry", "Scone")
 # calculate pie_* variables
 for(suffix in suffixes) {
   columns <- paste(pie, suffix, sep="_") # creates a vector of column names with current suffix
@@ -886,12 +901,12 @@ for(suffix in suffixes) {
 # Calculate row mean of pie
 df$pie_mean <- rowMeans(df[, paste("pie", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove coffee_* columns
+# Remove pie_* columns
 df <- df[ , !(names(df) %in% paste("pie", suffixes, sep="_"))]
 rm(columns, pie_vars, new_column, suffix)
 
-# 4. merge dessert:
-dessert_vars <- c("NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthdessert")
+# 5. merge dessert:
+dessert_vars <- c("Yogurt", "Icecream", "MilkPuddin", "OthMilkPuddin", "Soya", "Fruitcake", "Cake", "Doughnut", "Spongepuddin", "Cheesecake", "Othdessert")
 # calculate dessert_* variables
 for(suffix in suffixes) {
   columns <- paste(dessert, suffix, sep="_") # creates a vector of column names with current suffix
@@ -902,12 +917,12 @@ for(suffix in suffixes) {
 # Calculate row mean of dessert
 df$dessert_mean <- rowMeans(df[, paste("dessert", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove coffee_* columns
+# Remove dessert_* columns
 df <- df[ , !(names(df) %in% paste("dessert", suffixes, sep="_"))]
 rm(columns, dessert_vars, new_column, suffix)
 
-# 5. merge sweet:
-sweet_vars <- c("NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthsweet")
+# 6. merge sweet:
+sweet_vars <- c("Chocolatebar", "WhiteChocolate", "MilkChocolate", "DarkChocolate", "ChocolateRaisin", "Chocolatesweet", "Dietsweet", "Sweets", "ChocolateCoverBiscuit", "ChocolateBiscuit", "SweetBiscuit", "CerealBar", "OthSweet")
 # calculate sweet_* variables
 for(suffix in suffixes) {
   columns <- paste(sweet, suffix, sep="_") # creates a vector of column names with current suffix
@@ -918,12 +933,12 @@ for(suffix in suffixes) {
 # Calculate row mean of sweet
 df$sweet_mean <- rowMeans(df[, paste("sweet", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove coffee_* columns
+# Remove sweet_* columns
 df <- df[ , !(names(df) %in% paste("sweet", suffixes, sep="_"))]
 rm(columns, sweet_vars, new_column, suffix)
 
-# 6. merge savoury:
-savoury_vars <- c("NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthsavoury")
+# 7. merge savoury:
+savoury_vars <- c("SaltPeanut", "Peanut", "SaltNut", "Nut", "Seeds", "Crisp", "SavouryBiscuit", "CheesyBiscuit", "Olives", "OthSavoury")
 # calculate savoury_* variables
 for(suffix in suffixes) {
   columns <- paste(savoury, suffix, sep="_") # creates a vector of column names with current suffix
@@ -934,12 +949,12 @@ for(suffix in suffixes) {
 # Calculate row mean of savoury
 df$savoury_mean <- rowMeans(df[, paste("savoury", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove coffee_* columns
+# Remove savoury_* columns
 df <- df[ , !(names(df) %in% paste("savoury", suffixes, sep="_"))]
 rm(columns, savoury_vars, new_column, suffix)
 
-# 7. merge soup:
-soup_vars <- c("NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthsoup")
+# 8. merge soup:
+soup_vars <- c("InstantSoup", "CannnedSoup", "HomeSoup")
 # calculate soup_* variables
 for(suffix in suffixes) {
   columns <- paste(soup, suffix, sep="_") # creates a vector of column names with current suffix
@@ -950,12 +965,12 @@ for(suffix in suffixes) {
 # Calculate row mean of soup
 df$soup_mean <- rowMeans(df[, paste("soup", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove coffee_* columns
+# Remove soup_* columns
 df <- df[ , !(names(df) %in% paste("soup", suffixes, sep="_"))]
 rm(columns, soup_vars, new_column, suffix)
 
-# 8. merge starchy:
-starchy_vars <- c("NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthstarchy")
+# 9. merge starchy:
+starchy_vars <- c("WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi Snackpot", "Couscous", "OthGrain")
 # calculate starchy_* variables
 for(suffix in suffixes) {
   columns <- paste(starchy, suffix, sep="_") # creates a vector of column names with current suffix
@@ -966,7 +981,7 @@ for(suffix in suffixes) {
 # Calculate row mean of starchy
 df$starchy_mean <- rowMeans(df[, paste("starchy", suffixes, sep="_")], na.rm = TRUE)
 
-# Remove coffee_* columns
+# Remove starchy_* columns
 df <- df[ , !(names(df) %in% paste("starchy", suffixes, sep="_"))]
 rm(columns, starchy_vars, new_column, suffix)
 
