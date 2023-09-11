@@ -987,3 +987,195 @@ rm(columns, starchy_vars, new_column, suffix)
 write.csv(df, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_grain_dessert.csv",na='',row.names=FALSE)
 rm(list=ls())
 ```
+
+```{r}
+# get the meat vegetable data ready to go
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\food_meat_vege.csv')
+# remove invalid values
+# consumption variables (can be only 0 or 1)
+cvariables <- c("EggConsum_1.0","EggConsum_2.0","EggConsum_3.0","EggConsum_4.0","EggConsum_0.0","MeatConsum_1.0","MeatConsum_2.0","MeatConsum_3.0","MeatConsum_4.0","MeatConsum_0.0","FishConsum_1.0","FishConsum_2.0","FishConsum_3.0","FishConsum_4.0","FishConsum_0.0","VegeAlter_1.0","VegeAlter_2.0","VegeAlter_3.0","VegeAlter_4.0","VegeAlter_0.0","SpreadConsum_1.0","SpreadConsum_2.0","SpreadConsum_3.0","SpreadConsum_4.0","SpreadConsum_0.0","NoFatCook_1.0","NoFatCook_2.0","NoFatCook_3.0","NoFatCook_4.0","NoFatCook_0.0","VegeConsum_1.0","VegeConsum_2.0","VegeConsum_3.0","VegeConsum_4.0","VegeConsum_0.0","ButterAddPotato_1.0","ButterAddPotato_2.0","ButterAddPotato_3.0","ButterAddPotato_4.0","ButterAddPotato_0.0","FruitConsum_1.0","FruitConsum_2.0","FruitConsum_3.0","FruitConsum_4.0","FruitConsum_0.0")
+
+# wanted variables
+egg_variables <- c("WholeEgg_1.0","WholeEgg_2.0","WholeEgg_3.0","WholeEgg_4.0","WholeEgg_0.0","Omelette_1.0","Omelette_2.0","Omelette_3.0","Omelette_4.0","Omelette_0.0","EgginSandwich_1.0","EgginSandwich_2.0","EgginSandwich_3.0","EgginSandwich_4.0","EgginSandwich_0.0","ScotchEgg_1.0","ScotchEgg_2.0","ScotchEgg_3.0","ScotchEgg_4.0","ScotchEgg_0.0","OthEgg_1.0","OthEgg_2.0","OthEgg_3.0","OthEgg_4.0","OthEgg_0.0")
+
+meat_variables <- c("Sausage_1.0","Sausage_2.0","Sausage_3.0","Sausage_4.0","Sausage_0.0","Beef_1.0","Beef_2.0","Beef_3.0","Beef_4.0","Beef_0.0","Pork_1.0","Pork_2.0","Pork_3.0","Pork_4.0","Pork_0.0","Lamb_1.0","Lamb_2.0","Lamb_3.0","Lamb_4.0","Lamb_0.0","CrumbPoultry_1.0","CrumbPoultry_2.0","CrumbPoultry_3.0","CrumbPoultry_4.0","CrumbPoultry_0.0","Poultry_1.0","Poultry_2.0","Poultry_3.0","Poultry_4.0","Poultry_0.0","Bacon_1.0","Bacon_2.0","Bacon_3.0","Bacon_4.0","Bacon_0.0","Ham_1.0","Ham_2.0","Ham_3.0","Ham_4.0","Ham_0.0","Liver_1.0","Liver_2.0","Liver_3.0","Liver_4.0","Liver_0.0","OthMeat_1.0","OthMeat_2.0","OthMeat_3.0","OthMeat_4.0","OthMeat_0.0")
+
+fish_variables <- c("TinTuna_1.0","TinTuna_2.0","TinTuna_3.0","TinTuna_4.0","TinTuna_0.0","OilyFish_1.0","OilyFish_2.0","OilyFish_3.0","OilyFish_4.0","OilyFish_0.0","BreadFish_1.0","BreadFish_2.0","BreadFish_3.0","BreadFish_4.0","BreadFish_0.0","BatteredFish_1.0","BatteredFish_2.0","BatteredFish_3.0","BatteredFish_4.0","BatteredFish_0.0","WhiteFish_1.0","WhiteFish_2.0","WhiteFish_3.0","WhiteFish_4.0","WhiteFish_0.0","Prawns_1.0","Prawns_2.0","Prawns_3.0","Prawns_4.0","Prawns_0.0","LobsterCrab_1.0","LobsterCrab_2.0","LobsterCrab_3.0","LobsterCrab_4.0","LobsterCrab_0.0","Shellfish_1.0","Shellfish_2.0","Shellfish_3.0","Shellfish_4.0","Shellfish_0.0","OthFish_1.0","OthFish_2.0","OthFish_3.0","OthFish_4.0","OthFish_0.0")
+
+vegeAlter_variables <- c("VegeSausage_1.0","VegeSausage_2.0","VegeSausage_3.0","VegeSausage_4.0","VegeSausage_0.0","Tofu_1.0","Tofu_2.0","Tofu_3.0","Tofu_4.0","Tofu_0.0","Quorn_1.0","Quorn_2.0","Quorn_3.0","Quorn_4.0","Quorn_0.0","OthVegeAlter_1.0","OthVegeAlter_2.0","OthVegeAlter_3.0","OthVegeAlter_4.0","OthVegeAlter_0.0")
+
+vegetable_variables <- c("BakeBean_1.0","BakeBean_2.0","BakeBean_3.0","BakeBean_4.0","BakeBean_0.0","Pulse_1.0","Pulse_2.0","Pulse_3.0","Pulse_4.0","Pulse_0.0","FriedPotato_1.0","FriedPotato_2.0","FriedPotato_3.0","FriedPotato_4.0","FriedPotato_0.0","BoilPotato_1.0","BoilPotato_2.0","BoilPotato_3.0","BoilPotato_4.0","BoilPotato_0.0","MashPotato_1.0","MashPotato_2.0","MashPotato_3.0","MashPotato_4.0","MashPotato_0.0","MixVege_1.0","MixVege_2.0","MixVege_3.0","MixVege_4.0","MixVege_0.0","VegePiece_1.0","VegePiece_2.0","VegePiece_3.0","VegePiece_4.0","VegePiece_0.0","Coleslaw_1.0","Coleslaw_2.0","Coleslaw_3.0","Coleslaw_4.0","Coleslaw_0.0","SideSalad_1.0","SideSalad_2.0","SideSalad_3.0","SideSalad_4.0","SideSalad_0.0","Avocado_1.0","Avocado_2.0","Avocado_3.0","Avocado_4.0","Avocado_0.0","BroadBean_1.0","BroadBean_2.0","BroadBean_3.0","BroadBean_4.0","BroadBean_0.0","GreenBean_1.0","GreenBean_2.0","GreenBean_3.0","GreenBean_4.0","GreenBean_0.0","Beetroot_1.0","Beetroot_2.0","Beetroot_3.0","Beetroot_4.0","Beetroot_0.0","Broccoli_1.0","Broccoli_2.0","Broccoli_3.0","Broccoli_4.0","Broccoli_0.0","Butternut_1.0","Butternut_2.0","Butternut_3.0","Butternut_4.0","Butternut_0.0","Cabbage_1.0","Cabbage_2.0","Cabbage_3.0","Cabbage_4.0","Cabbage_0.0","Carrot_1.0","Carrot_2.0","Carrot_3.0","Carrot_4.0","Carrot_0.0","Cauliflower_1.0","Cauliflower_2.0","Cauliflower_3.0","Cauliflower_4.0","Cauliflower_0.0","Celery_1.0","Celery_2.0","Celery_3.0","Celery_4.0","Celery_0.0","Courgette_1.0","Courgette_2.0","Courgette_3.0","Courgette_4.0","Courgette_0.0","Cucumber_1.0","Cucumber_2.0","Cucumber_3.0","Cucumber_4.0","Cucumber_0.0","Garlic_1.0","Garlic_2.0","Garlic_3.0","Garlic_4.0","Garlic_0.0","Leek_1.0","Leek_2.0","Leek_3.0","Leek_4.0","Leek_0.0","Lettuce_1.0","Lettuce_2.0","Lettuce_3.0","Lettuce_4.0","Lettuce_0.0","Mushroom_1.0","Mushroom_2.0","Mushroom_3.0","Mushroom_4.0","Mushroom_0.0","Onion_1.0","Onion_2.0","Onion_3.0","Onion_4.0","Onion_0.0","Parsnip_1.0","Parsnip_2.0","Parsnip_3.0","Parsnip_4.0","Parsnip_0.0","Pea_1.0","Pea_2.0","Pea_3.0","Pea_4.0","Pea_0.0","Sweetpepper_1.0","Sweetpepper_2.0","Sweetpepper_3.0","Sweetpepper_4.0","Sweetpepper_0.0","Spinach_1.0","Spinach_2.0","Spinach_3.0","Spinach_4.0","Spinach_0.0","Sprouts_1.0","Sprouts_2.0","Sprouts_3.0","Sprouts_4.0","Sprouts_0.0","Sweetcorn_1.0","Sweetcorn_2.0","Sweetcorn_3.0","Sweetcorn_4.0","Sweetcorn_0.0","Sweetpotato_1.0","Sweetpotato_2.0","Sweetpotato_3.0","Sweetpotato_4.0","Sweetpotato_0.0","FreshTomato_1.0","FreshTomato_2.0","FreshTomato_3.0","FreshTomato_4.0","FreshTomato_0.0","TinTomato_1.0","TinTomato_2.0","TinTomato_3.0","TinTomato_4.0","TinTomato_0.0","Turnip_1.0","Turnip_2.0","Turnip_3.0","Turnip_4.0","Turnip_0.0","Watercress_1.0","Watercress_2.0","Watercress_3.0","Watercress_4.0","Watercress_0.0","OthVege_1.0","OthVege_2.0","OthVege_3.0","OthVege_4.0","OthVege_0.0")
+
+fruit_variables <- c("StewedFruit_1.0","StewedFruit_2.0","StewedFruit_3.0","StewedFruit_4.0","StewedFruit_0.0","Prune_1.0","Prune_2.0","Prune_3.0","Prune_4.0","Prune_0.0","DriedFruit_1.0","DriedFruit_2.0","DriedFruit_3.0","DriedFruit_4.0","DriedFruit_0.0","MixFruit_1.0","MixFruit_2.0","MixFruit_3.0","MixFruit_4.0","MixFruit_0.0","Apple_1.0","Apple_2.0","Apple_3.0","Apple_4.0","Apple_0.0","Banana_1.0","Banana_2.0","Banana_3.0","Banana_4.0","Banana_0.0","Berry_1.0","Berry_2.0","Berry_3.0","Berry_4.0","Berry_0.0","Cherry_1.0","Cherry_2.0","Cherry_3.0","Cherry_4.0","Cherry_0.0","Grapefruit_1.0","Grapefruit_2.0","Grapefruit_3.0","Grapefruit_4.0","Grapefruit_0.0","Grape_1.0","Grape_2.0","Grape_3.0","Grape_4.0","Grape_0.0","Mango_1.0","Mango_2.0","Mango_3.0","Mango_4.0","Mango_0.0","Melon_1.0","Melon_2.0","Melon_3.0","Melon_4.0","Melon_0.0","Orange_1.0","Orange_2.0","Orange_3.0","Orange_4.0","Orange_0.0","Satsuma_1.0","Satsuma_2.0","Satsuma_3.0","Satsuma_4.0","Satsuma_0.0","Peach_1.0","Peach_2.0","Peach_3.0","Peach_4.0","Peach_0.0","Pear_1.0","Pear_2.0","Pear_3.0","Pear_4.0","Pear_0.0","Pineapple_1.0","Pineapple_2.0","Pineapple_3.0","Pineapple_4.0","Pineapple_0.0","Plum_1.0","Plum_2.0","Plum_3.0","Plum_4.0","Plum_0.0","OthFruit_1.0","OthFruit_2.0","OthFruit_3.0","OthFruit_4.0","OthFruit_0.0")
+
+# define valid values
+valid_egg_values <- c(1, 2, 300, 555)
+valid_meat_values <- c(1, 2, 3, 4, 500, 555)
+valid_fish_values <- c(1, 2, 3, 400, 555)
+valid_vegeAlter_values <- c(1, 2, 3, 400, 555)
+valid_vegetable_values <- c(1, 2, 300, 555, 444)
+valid_fruit_values <- c(1, 2, 3, 400, 555)
+valid_cvalues <- c(0, 1)
+
+# only keep valid values for wanted variables
+df[, egg_variables] <- lapply(df[, egg_variables], function(x) ifelse(x %in% valid_egg_values, x, NA))
+df[, meat_variables] <- lapply(df[, meat_variables], function(x) ifelse(x %in% valid_meat_values, x, NA))
+df[, fish_variables] <- lapply(df[, fish_variables], function(x) ifelse(x %in% valid_fish_values, x, NA))
+df[, vegeAlter_variables] <- lapply(df[, vegeAlter_variables], function(x) ifelse(x %in% valid_vegeAlter_values, x, NA))
+df[, vegetable_variables] <- lapply(df[, vegetable_variables], function(x) ifelse(x %in% valid_vegetable_values, x, NA))
+df[, fruit_variables] <- lapply(df[, fruit_variables], function(x) ifelse(x %in% valid_fruit_values, x, NA))
+df[, cvariables] <- lapply(df[, cvariables], function(x) ifelse(x %in% valid_cvalues, x, NA))
+# replace values
+df[, egg_variables] <- lapply(df[, egg_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 300, 3, x)
+    x
+})
+df[, meat_variables] <- lapply(df[, meat_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 500, 5, x)
+    x
+})
+df[, fish_variables] <- lapply(df[, fish_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+df[, vegeAlter_variables] <- lapply(df[, vegeAlter_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+df[, vegetable_variables] <- lapply(df[, vegetable_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 300, 3, x)
+    x <- ifelse(x == 444, 0.25, x)
+    x
+})
+df[, fruit_variables] <- lapply(df[, fruit_variables], function(x) { 
+    x <- ifelse(x == 555, 0.5, x) 
+    x <- ifelse(x == 400, 4, x)
+    x
+})
+
+rm(valid_egg_values, valid_meat_values, valid_fish_values, valid_vegeAlter_values, valid_vegetable_values, valid_fruit_values, valid_cvalues)
+
+# List of variables
+variables <- c("WholeEgg","Omelette","EgginSandwich","ScotchEgg","OthEgg","Sausage","Beef","Pork","Lamb","CrumbPoultry","Poultry","Bacon","Ham","Liver","OthMeat","TinTuna","OilyFish","BreadFish","BatteredFish","WhiteFish","Prawns","LobsterCrab","Shellfish","OthFish","VegeSausage","Tofu","Quorn","OthVegeAlter","BakeBean","Pulse","FriedPotato","BoilPotato","MashPotato","MixVege","VegePiece","Coleslaw","SideSalad","Avocado","BroadBean","GreenBean","Beetroot","Broccoli","Butternut","Cabbage","Carrot","Cauliflower","Celery","Courgette","Cucumber","Garlic","Leek","Lettuce","Mushroom","Onion","Parsnip","Pea","Sweetpepper","Spinach","Sprouts","Sweetcorn","Sweetpotato","FreshTomato","TinTomato","Turnip","Watercress","OthVege","StewedFruit","Prune","DriedFruit","MixFruit","Apple","Banana","Berry","Cherry","Grapefruit","Grape","Mango","Melon","Orange","Satsuma","Peach","Pear","Pineapple","Plum","OthFruit")
+
+# Suffix for each variable
+suffix <- c("_1.0", "_2.0", "_3.0", "_4.0", "_0.0")
+# Loop through all variables
+for (var in variables) {
+  # Generate the column names for each variable
+  cols <- paste0(var, suffix)
+  # Check if columns exist in the dataframe
+  if (all(cols %in% colnames(df))) {
+    # Calculate the mean
+    df[[paste0(var, "_mean")]] <- rowMeans(df[, cols], na.rm = TRUE)
+  }
+}
+rm(cols, suffix, var, variables, egg_variables,meat_variables, fish_variables, vegeAlter_variables, vegetable_variables, fruit_variables, cvariables)
+
+# merge variables
+# 1. merge bread:
+egg_vars <- c("WholeEgg","Omelette","EgginSandwich","ScotchEgg","OthEgg")
+suffixes <- c("1.0", "2.0", "3.0", "4.0", "0.0")
+
+# calculate bread_* variables
+for(suffix in suffixes) {
+  columns <- paste(egg_vars, suffix, sep="_") # creates a vector of column names with current suffix
+  new_column <- paste("egg", suffix, sep="_") # creates a name for new column
+  df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
+}
+
+# Calculate row mean of juice
+df$egg_mean <- rowMeans(df[, paste("egg", suffixes, sep="_")], na.rm = TRUE)
+
+# Remove bread_* columns
+df <- df[ , !(names(df) %in% paste("bread", suffixes, sep="_"))]
+rm(columns, egg_vars, new_column, suffix)
+
+# 2. merge meat:
+meat_vars <- c("Sausage","Beef","Pork","Lamb","CrumbPoultry","Poultry","Bacon","Ham","Liver","OthMeat")
+# calculate meat_* variables
+for(suffix in suffixes) {
+  columns <- paste(meat_vars, suffix, sep="_") # creates a vector of column names with current suffix
+  new_column <- paste("meat", suffix, sep="_") # creates a name for new column
+  df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
+}
+
+# Calculate row mean of meat
+df$meat_mean <- rowMeans(df[, paste("meat", suffixes, sep="_")], na.rm = TRUE)
+
+# Remove meat_* columns
+df <- df[ , !(names(df) %in% paste("meat", suffixes, sep="_"))]
+rm(columns, meat_vars, new_column, suffix)
+
+# 3. merge fish:
+fish_vars <- c("TinTuna","OilyFish","BreadFish","BatteredFish","WhiteFish","Prawns","LobsterCrab","Shellfish","OthFish")
+# calculate fish_* variables
+for(suffix in suffixes) {
+  columns <- paste(fish_vars, suffix, sep="_") # creates a vector of column names with current suffix
+  new_column <- paste("fish", suffix, sep="_") # creates a name for new column
+  df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
+}
+
+# Calculate row mean of fish
+df$fish_mean <- rowMeans(df[, paste("fish", suffixes, sep="_")], na.rm = TRUE)
+
+# Remove fish_* columns
+df <- df[ , !(names(df) %in% paste("fish", suffixes, sep="_"))]
+rm(columns, fish_vars, new_column, suffix)
+
+# 4. merge vegeAlter:
+vegeAlter_vars <- c("VegeSausage","Tofu","Quorn","OthVegeAlter")
+# calculate vegeAlter_* variables
+for(suffix in suffixes) {
+  columns <- paste(vegeAlter_vars, suffix, sep="_") # creates a vector of column names with current suffix
+  new_column <- paste("vegeAlter", suffix, sep="_") # creates a name for new column
+  df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
+}
+
+# Calculate row mean of vegeAlter
+df$vegeAlter_mean <- rowMeans(df[, paste("vegeAlter", suffixes, sep="_")], na.rm = TRUE)
+
+# Remove vegeAlter_* columns
+df <- df[ , !(names(df) %in% paste("vegeAlter", suffixes, sep="_"))]
+rm(columns, vegeAlter_vars, new_column, suffix)
+
+# 5. merge vegetable:
+vegetable_vars <- c("BakeBean","Pulse","FriedPotato","BoilPotato","MashPotato","MixVege","VegePiece","Coleslaw","SideSalad","Avocado","BroadBean","GreenBean","Beetroot","Broccoli","Butternut","Cabbage","Carrot","Cauliflower","Celery","Courgette","Cucumber","Garlic","Leek","Lettuce","Mushroom","Onion","Parsnip","Pea","Sweetpepper","Spinach","Sprouts","Sweetcorn","Sweetpotato","FreshTomato","TinTomato","Turnip","Watercress","OthVege")
+# calculate vegetable_* variables
+for(suffix in suffixes) {
+  columns <- paste(vegetable_vars, suffix, sep="_") # creates a vector of column names with current suffix
+  new_column <- paste("vegetable", suffix, sep="_") # creates a name for new column
+  df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
+}
+
+# Calculate row mean of vegetable
+df$vegetable_mean <- rowMeans(df[, paste("vegetable", suffixes, sep="_")], na.rm = TRUE)
+
+# Remove vegetable_* columns
+df <- df[ , !(names(df) %in% paste("vegetable", suffixes, sep="_"))]
+rm(columns, vegetable_vars, new_column, suffix)
+
+# 6. merge fruit:
+fruit_vars <- c("StewedFruit","Prune","DriedFruit","MixFruit","Apple","Banana","Berry","Cherry","Grapefruit","Grape","Mango","Melon","Orange","Satsuma","Peach","Pear","Pineapple","Plum","OthFruit")
+# calculate fruit_* variables
+for(suffix in suffixes) {
+  columns <- paste(fruit_vars, suffix, sep="_") # creates a vector of column names with current suffix
+  new_column <- paste("fruit", suffix, sep="_") # creates a name for new column
+  df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
+}
+
+# Calculate row mean of fruit
+df$fruit_mean <- rowMeans(df[, paste("fruit", suffixes, sep="_")], na.rm = TRUE)
+
+# Remove fruit_* columns
+df <- df[ , !(names(df) %in% paste("fruit", suffixes, sep="_"))]
+rm(columns, fruit_vars, new_column, suffix)
+
+write.csv(df, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_meat_vege.csv",na='',row.names=FALSE)
+rm(list=ls())
+```
