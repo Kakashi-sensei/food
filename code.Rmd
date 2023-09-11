@@ -823,7 +823,6 @@ rm(valid_bread_values, valid_pie_values,valid_dessert_values, valid_sweet_values
 # List of variables
 variables <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread", "NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt", "DoubleCrustPastry", "SingleCrustPastry", "Crumble", "Pizza", "Pancake", "ScotchPancake", "YorkshirePudd", "IndiaSnack", "Croissant", "DanishPastry", "Scone", "Yogurt", "Icecream", "MilkPuddin", "OthMilkPuddin", "Soya", "Fruitcake", "Cake", "Doughnut", "Spongepuddin", "Cheesecake", "Othdessert", "Chocolatebar", "WhiteChocolate", "MilkChocolate", "DarkChocolate", "ChocolateRaisin", "Chocolatesweet", "Dietsweet", "Sweets", "ChocolateCoverBiscuit", "ChocolateBiscuit", "SweetBiscuit", "CerealBar", "OthSweet", "SaltPeanut", "Peanut", "SaltNut", "Nut", "Seeds", "Crisp", "SavouryBiscuit", "CheesyBiscuit", "Olives", "OthSavoury", "InstantSoup", "CannnedSoup", "HomeSoup", "WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi Snackpot", "Couscous", "OthGrain")
 
-
 # Suffix for each variable
 suffix <- c("_1.0", "_2.0", "_3.0", "_4.0", "_0.0")
 # Loop through all variables
@@ -861,7 +860,7 @@ rm(columns, bread_vars, new_column, suffix)
 breadWithButt_vars <- c("NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt")
 # calculate breadWithButt_* variables
 for(suffix in suffixes) {
-  columns <- paste(breadWithButt, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(breadWithButt_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("breadWithButt", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
@@ -877,7 +876,7 @@ rm(columns, breadWithButt_vars, new_column, suffix)
 breadall_vars <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread", "NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt")
 # calculate breadall_* variables
 for(suffix in suffixes) {
-  columns <- paste(breadall, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(breadall_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("breadall", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
@@ -893,7 +892,7 @@ rm(columns, breadall_vars, new_column, suffix)
 pie_vars <- c("DoubleCrustPastry", "SingleCrustPastry", "Crumble", "Pizza", "Pancake", "ScotchPancake", "YorkshirePudd", "IndiaSnack", "Croissant", "DanishPastry", "Scone")
 # calculate pie_* variables
 for(suffix in suffixes) {
-  columns <- paste(pie, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(pie_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("pie", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
@@ -909,7 +908,7 @@ rm(columns, pie_vars, new_column, suffix)
 dessert_vars <- c("Yogurt", "Icecream", "MilkPuddin", "OthMilkPuddin", "Soya", "Fruitcake", "Cake", "Doughnut", "Spongepuddin", "Cheesecake", "Othdessert")
 # calculate dessert_* variables
 for(suffix in suffixes) {
-  columns <- paste(dessert, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(dessert_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("dessert", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
@@ -925,7 +924,7 @@ rm(columns, dessert_vars, new_column, suffix)
 sweet_vars <- c("Chocolatebar", "WhiteChocolate", "MilkChocolate", "DarkChocolate", "ChocolateRaisin", "Chocolatesweet", "Dietsweet", "Sweets", "ChocolateCoverBiscuit", "ChocolateBiscuit", "SweetBiscuit", "CerealBar", "OthSweet")
 # calculate sweet_* variables
 for(suffix in suffixes) {
-  columns <- paste(sweet, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(sweet_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("sweet", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
@@ -941,7 +940,7 @@ rm(columns, sweet_vars, new_column, suffix)
 savoury_vars <- c("SaltPeanut", "Peanut", "SaltNut", "Nut", "Seeds", "Crisp", "SavouryBiscuit", "CheesyBiscuit", "Olives", "OthSavoury")
 # calculate savoury_* variables
 for(suffix in suffixes) {
-  columns <- paste(savoury, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(savoury_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("savoury", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
@@ -957,7 +956,7 @@ rm(columns, savoury_vars, new_column, suffix)
 soup_vars <- c("InstantSoup", "CannnedSoup", "HomeSoup")
 # calculate soup_* variables
 for(suffix in suffixes) {
-  columns <- paste(soup, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(soup_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("soup", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
@@ -973,7 +972,7 @@ rm(columns, soup_vars, new_column, suffix)
 starchy_vars <- c("WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi Snackpot", "Couscous", "OthGrain")
 # calculate starchy_* variables
 for(suffix in suffixes) {
-  columns <- paste(starchy, suffix, sep="_") # creates a vector of column names with current suffix
+  columns <- paste(starchy_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("starchy", suffix, sep="_") # creates a name for new column
   df[[new_column]] <- rowSums(df[, columns], na.rm = TRUE)
 }
