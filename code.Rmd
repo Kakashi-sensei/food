@@ -821,7 +821,7 @@ df[, starchy_variables] <- lapply(df[, starchy_variables], function(x) {
 rm(valid_bread_values, valid_pie_values,valid_dessert_values, valid_sweet_values, valid_savoury_values, valid_soup_values, valid_starchy_values, valid_cvalues)
 
 # List of variables
-variables <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread", "NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt", "DoubleCrustPastry", "SingleCrustPastry", "Crumble", "Pizza", "Pancake", "ScotchPancake", "YorkshirePudd", "IndiaSnack", "Croissant", "DanishPastry", "Scone", "Yogurt", "Icecream", "MilkPuddin", "OthMilkPuddin", "Soya", "Fruitcake", "Cake", "Doughnut", "Spongepuddin", "Cheesecake", "Othdessert", "Chocolatebar", "WhiteChocolate", "MilkChocolate", "DarkChocolate", "ChocolateRaisin", "Chocolatesweet", "Dietsweet", "Sweets", "ChocolateCoverBiscuit", "ChocolateBiscuit", "SweetBiscuit", "CerealBar", "OthSweet", "SaltPeanut", "Peanut", "SaltNut", "Nut", "Seeds", "Crisp", "SavouryBiscuit", "CheesyBiscuit", "Olives", "OthSavoury", "InstantSoup", "CannnedSoup", "HomeSoup", "WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi Snackpot", "Couscous", "OthGrain")
+variables <- c("SlicedBread", "Baguette", "Bap", "Breadroll", "Naanbread", "Garlicbread", "Crispbread", "Oatcakes", "Otherbread", "NumberofsliceswithButt", "NumberbaguettewithButt", "NumberbapwithButt", "NumberbreadrollwithButt", "NumbercrackerwithButt", "NumberoatcakewithButt", "NumberOthbreadwithButt", "DoubleCrustPastry", "SingleCrustPastry", "Crumble", "Pizza", "Pancake", "ScotchPancake", "YorkshirePudd", "IndiaSnack", "Croissant", "DanishPastry", "Scone", "Yogurt", "Icecream", "MilkPuddin", "OthMilkPuddin", "Soya", "Fruitcake", "Cake", "Doughnut", "Spongepuddin", "Cheesecake", "Othdessert", "Chocolatebar", "WhiteChocolate", "MilkChocolate", "DarkChocolate", "ChocolateRaisin", "Chocolatesweet", "Dietsweet", "Sweets", "ChocolateCoverBiscuit", "ChocolateBiscuit", "SweetBiscuit", "CerealBar", "OthSweet", "SaltPeanut", "Peanut", "SaltNut", "Nut", "Seeds", "Crisp", "SavouryBiscuit", "CheesyBiscuit", "Olives", "OthSavoury", "InstantSoup", "CannnedSoup", "HomeSoup", "WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi", "Snackpot", "Couscous", "OthGrain")
 
 # Suffix for each variable
 suffix <- c("_1.0", "_2.0", "_3.0", "_4.0", "_0.0")
@@ -969,7 +969,7 @@ df <- df[ , !(names(df) %in% paste("soup", suffixes, sep="_"))]
 rm(columns, soup_vars, new_column, suffix)
 
 # 9. merge starchy:
-starchy_vars <- c("WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi Snackpot", "Couscous", "OthGrain")
+starchy_vars <- c("WhitePasta", "WholemealPasta", "WhiteRice", "BrownRice", "Sushi", "Snackpot", "Couscous", "OthGrain")
 # calculate starchy_* variables
 for(suffix in suffixes) {
   columns <- paste(starchy_vars, suffix, sep="_") # creates a vector of column names with current suffix
