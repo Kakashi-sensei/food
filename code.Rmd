@@ -985,16 +985,6 @@ df$starchy_mean <- rowMeans(df[, paste("starchy", suffixes, sep="_")], na.rm = T
 df <- df[ , !(names(df) %in% paste("starchy", suffixes, sep="_"))]
 rm(columns, starchy_vars, new_column, suffix)
 
-
-
-
-
-
-
-
-write.csv(df, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_liquids1.csv",na='',row.names=FALSE)
+write.csv(df, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_grain_dessert.csv",na='',row.names=FALSE)
 rm(list=ls())
-
-
-
 ```
