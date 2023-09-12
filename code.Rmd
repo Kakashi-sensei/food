@@ -541,6 +541,7 @@ for(factor_var in factor_vars) {
 
     # Add the results to the data frame
     results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Factors = factor_var,
                                          Test_Variable = test_var,
                                          Estimate = estimate,
                                          Std_Error = std_error,
@@ -1391,6 +1392,7 @@ for(factor_var in factor_vars) {
 
     # Add the results to the data frame
     results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Factors = factor_var,
                                          Test_Variable = test_var,
                                          Estimate = estimate,
                                          Std_Error = std_error,
@@ -1457,6 +1459,7 @@ for(factor_var in factor_vars) {
 
     # Add the results to the data frame
     results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Factors = factor_var,
                                          Test_Variable = test_var,
                                          Estimate = estimate,
                                          Std_Error = std_error,
@@ -1523,6 +1526,7 @@ for(factor_var in factor_vars) {
 
     # Add the results to the data frame
     results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Factors = factor_var,
                                          Test_Variable = test_var,
                                          Estimate = estimate,
                                          Std_Error = std_error,
