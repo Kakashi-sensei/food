@@ -1078,11 +1078,11 @@ for (var in variables) {
 rm(cols, suffix, var, variables, egg_variables,meat_variables, fish_variables, vegeAlter_variables, vegetable_variables, fruit_variables, cvariables)
 
 # merge variables
-# 1. merge bread:
+# 1. merge egg:
 egg_vars <- c("WholeEgg","Omelette","EgginSandwich","ScotchEgg","OthEgg")
 suffixes <- c("1.0", "2.0", "3.0", "4.0", "0.0")
 
-# calculate bread_* variables
+# calculate egg_* variables
 for(suffix in suffixes) {
   columns <- paste(egg_vars, suffix, sep="_") # creates a vector of column names with current suffix
   new_column <- paste("egg", suffix, sep="_") # creates a name for new column
@@ -1093,7 +1093,7 @@ for(suffix in suffixes) {
 df$egg_mean <- rowMeans(df[, paste("egg", suffixes, sep="_")], na.rm = TRUE)
 
 # Remove bread_* columns
-df <- df[ , !(names(df) %in% paste("bread", suffixes, sep="_"))]
+df <- df[ , !(names(df) %in% paste("egg", suffixes, sep="_"))]
 rm(columns, egg_vars, new_column, suffix)
 
 # 2. merge meat:
