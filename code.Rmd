@@ -1179,3 +1179,193 @@ rm(columns, fruit_vars, new_column, suffix)
 write.csv(df, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_meat_vege.csv",na='',row.names=FALSE)
 rm(list=ls())
 ```
+
+
+
+```{r}
+#main effects test for liquids data
+library(lmerTest)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_liquids1.csv')
+# Fit the model
+df$APOE_all <- as.factor(df$APOE_all)
+df$T40_Gcar <- as.factor(df$T40_Gcar)
+df$family_history_AD <- as.factor(df$family_history_AD)
+df$Sex <- as.factor(df$Sex)
+df$AlcoholY08 <- as.factor(df$AlcoholY08)
+df$SmokingY08 <- as.factor(df$SmokingY08)
+df$Assessment_0 <- as.factor(df$Assessment_0)
+df$EID <- as.factor(df$EID)
+results <- data.frame()
+# List of variables to test
+test_vars <- c("Water_mean","LowCalorie_mean","Fizzy_mean","Squash_mean","OrangeJuice_mean","GrapeJuice_mean","FruitVegeJuice_mean","FruitSmoothie_mean","DairySmoothie_mean","InstantCoffee_mean","FilterCoffee_mean","Cappuccino_mean","Latte_mean","Espresso_mean","OtherCoffee_mean","LCalorieHotChocolate_mean","HChocolate_mean","juice_mean","coffee_mean")
+
+dependent_vars <- c("rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", 
+                    "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20")
+
+# Double loop through each dependent and test variable and fit the model
+for (dep_var in dependent_vars) {
+  for (test_var in test_vars) {
+  
+    # Construct the formula
+    formula <- as.formula(paste(dep_var, "~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                               BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend +", test_var, "+ 
+                               (1 | Assessment_0)"))
+  
+    # Fit the model
+    model <- lmer(formula, data = df, REML=FALSE)
+    
+   # Get the summary
+    model_summary <- summary(model)
+    
+    # Extract the results for the test variable
+    estimate <- model_summary$coefficients[test_var, "Estimate"]
+    std_error <- model_summary$coefficients[test_var, "Std. Error"]
+    p_value <- model_summary$coefficients[test_var, "Pr(>|t|)"]
+    
+    # Add the results to the data frame
+    results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Test_Variable = test_var,
+                                         Estimate = estimate,
+                                         Std_Error = std_error,
+                                         p_value = p_value))
+  }
+}
+write.csv(results, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\output\\maineffect_liquids.csv",na='',row.names=FALSE)
+rm(list=ls())
+
+#main effects test for grain_dessert data
+library(lmerTest)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_grain_dessert.csv')
+# Fit the model
+df$APOE_all <- as.factor(df$APOE_all)
+df$T40_Gcar <- as.factor(df$T40_Gcar)
+df$family_history_AD <- as.factor(df$family_history_AD)
+df$Sex <- as.factor(df$Sex)
+df$AlcoholY08 <- as.factor(df$AlcoholY08)
+df$SmokingY08 <- as.factor(df$SmokingY08)
+df$Assessment_0 <- as.factor(df$Assessment_0)
+df$EID <- as.factor(df$EID)
+results <- data.frame()
+# List of variables to test
+test_vars <- c("SlicedBread_mean","Baguette_mean","Bap_mean","Breadroll_mean","Naanbread_mean","Garlicbread_mean","Crispbread_mean","Oatcakes_mean","Otherbread_mean","NumberofsliceswithButt_mean","NumberbaguettewithButt_mean","NumberbapwithButt_mean","NumberbreadrollwithButt_mean","NumbercrackerwithButt_mean","NumberoatcakewithButt_mean","NumberOthbreadwithButt_mean","DoubleCrustPastry_mean","SingleCrustPastry_mean","Crumble_mean","Pizza_mean","Pancake_mean","ScotchPancake_mean","YorkshirePudd_mean","IndiaSnack_mean","Croissant_mean","DanishPastry_mean","Scone_mean","Yogurt_mean","Icecream_mean","MilkPuddin_mean","OthMilkPuddin_mean","Soya_mean","Fruitcake_mean","Cake_mean","Doughnut_mean","Spongepuddin_mean","Cheesecake_mean","Othdessert_mean","Chocolatebar_mean","WhiteChocolate_mean","MilkChocolate_mean","DarkChocolate_mean","ChocolateRaisin_mean","Chocolatesweet_mean","Dietsweet_mean","Sweets_mean","ChocolateCoverBiscuit_mean","ChocolateBiscuit_mean","SweetBiscuit_mean","CerealBar_mean","OthSweet_mean","SaltPeanut_mean","Peanut_mean","SaltNut_mean","Nut_mean","Seeds_mean","Crisp_mean","SavouryBiscuit_mean","CheesyBiscuit_mean","Olives_mean","OthSavoury_mean","InstantSoup_mean","CannnedSoup_mean","HomeSoup_mean","WhitePasta_mean","WholemealPasta_mean","WhiteRice_mean","BrownRice_mean","Sushi_mean","Snackpot_mean","Couscous_mean","OthGrain_mean","bread_mean","breadWithButt_mean","breadall_mean","pie_mean","dessert_mean","sweet_mean","savoury_mean","soup_mean","starchy_mean")
+
+dependent_vars <- c("rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", 
+                    "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20")
+
+# Double loop through each dependent and test variable and fit the model
+for (dep_var in dependent_vars) {
+  for (test_var in test_vars) {
+  
+    # Construct the formula
+    formula <- as.formula(paste(dep_var, "~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                               BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend +", test_var, "+ 
+                               (1 | Assessment_0)"))
+  
+    # Fit the model
+    model <- lmer(formula, data = df, REML=FALSE)
+    
+   # Get the summary
+    model_summary <- summary(model)
+    
+    # Extract the results for the test variable
+    estimate <- model_summary$coefficients[test_var, "Estimate"]
+    std_error <- model_summary$coefficients[test_var, "Std. Error"]
+    p_value <- model_summary$coefficients[test_var, "Pr(>|t|)"]
+    
+    # Add the results to the data frame
+    results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Test_Variable = test_var,
+                                         Estimate = estimate,
+                                         Std_Error = std_error,
+                                         p_value = p_value))
+  }
+}
+write.csv(results, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\output\\maineffect_grain_dessert.csv",na='',row.names=FALSE)
+rm(list=ls())
+
+
+
+
+
+
+
+
+
+
+
+```
+
+```{r}
+#interaction test for continuous data
+library(lmerTest)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv')
+
+# Fit the model -- factor all factor variables
+factor_vars <- c("AlcoholY08", "SmokingY08", "Assessment_0", "EID")
+for (var in factor_vars) {
+  df[[var]] <- as.factor(df[[var]])
+}
+rm(factor_vars,var)
+
+# Scale all continuous variables
+scale_vars <- c("Energy_mean", "Protein_mean", "Fat_mean", "Carbohydrate_mean", "SaturateFat_mean", 
+               "PolyunsaturatFat_mean", "Sugars_mean", "EnglystDietaryFibre_mean", "Iron_mean", "VB6_mean", 
+               "VB12_mean", "Folate_mean", "VC_mean", "Potassium_mean", "Magnesium_mean", "Retinol_mean", 
+               "Carotene_mean", "VD_mean", "Alcohol_continuous_mean", "Starch_mean", "Calcium_mean", "VE_mean", 
+               "rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", "rsfMRI_Component10", 
+               "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20", "Age_Baseline", "BMI_Y08andY12andY14_mean")
+
+for (var in scale_vars) {
+  df[[var]] <- scale(df[[var]])
+}
+rm(scale_vars, var)
+
+# Define the dependent variables
+dependent_vars <- c("rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", 
+                    "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20")
+
+# List of variables to test
+test_vars <- c("Energy_mean", "Protein_mean", "Fat_mean", "Carbohydrate_mean", "SaturateFat_mean", 
+               "PolyunsaturatFat_mean", "Sugars_mean", "EnglystDietaryFibre_mean", "Iron_mean", "VB6_mean", 
+               "VB12_mean", "Folate_mean", "VC_mean", "Potassium_mean", "Magnesium_mean", "Retinol_mean", 
+               "Carotene_mean", "VD_mean", "Alcohol_continuous_mean", "Starch_mean", "Calcium_mean", "VE_mean")
+
+# List of factors
+factor_vars <- c("APOE_all", "T40_Gcar", "family_history_AD")
+
+# Initialize a results data frame
+results <- data.frame()
+
+# Loop over each dependent variable
+for(factor_var in factor_vars) {
+ for (dep_var in dependent_vars) {
+  for (test_var in test_vars) {
+      
+    # Construct the formula
+    formula <- as.formula(paste(dep_var, "~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                               BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend +", factor_var, ":", test_var, "+ 
+                               (1 | Assessment_0)"))
+  
+    # Fit the model
+    model <- lmer(formula, data = df, REML=FALSE)
+
+    # Get the summary
+    model_summary <- summary(model)
+   
+    # Extract the results for the interaction term
+    interaction_term <- paste(factor_var, test_var, sep=":")
+    estimate <- model_summary$coefficients[interaction_term, "Estimate"]
+    std_error <- model_summary$coefficients[interaction_term, "Std. Error"]
+    p_value <- model_summary$coefficients[interaction_term, "Pr(>|t|)"]
+
+    # Add the results to the data frame
+    results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Test_Variable = test_var,
+                                         Estimate = estimate,
+                                         Std_Error = std_error,
+                                         P_Value = p_value))
+    }
+  }
+}
+write.csv(results, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\output\\interactions_continuous.csv",na='',row.names=FALSE)
+rm(list=ls())
