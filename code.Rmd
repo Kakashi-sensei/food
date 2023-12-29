@@ -1539,9 +1539,209 @@ rm(list=ls())
 ```
 
 
+```{r}
+# writing the continuous data paper
+# 1. work on VBs, including "VB6_mean", "VB12_mean", "Folate_mean"
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv')
+# check how many valid raws (cases) for VBs
+
+valid_rows_subset <- complete.cases(df$AlcoholY08, df$SmokingY08, df$Assessment_0, df$EID, df$VB6_mean, df$VB12_mean, df$Folate_mean, df$rsfMRI_Component1, df$rsfMRI_Component5, df$rsfMRI_Component7, df$rsfMRI_Component9, df$rsfMRI_Component10, df$rsfMRI_Component13, df$rsfMRI_Component14, df$rsfMRI_Component20, df$Age_Baseline, df$BMI_Y08andY12andY14_mean)
+
+sum(valid_rows_subset)
+```
+
+```{r}
+
+# Assuming you have a vector of p-values called 'pvalues'
+pvalues <- c(0.008492981, 0.012725078, 0.007010978, 0.040627048, 0.017087975, 0.368724381, 0.026959075, 0.022282602, 0.069875473, 0.078941937, 0.003931288, 0.327120803, 0.166782577, 0.011727071, 0.011243097, 0.119105235, 0.053745701, 0.620110634, 0.024457009, 0.016468914, 0.05495279, 0.620050487, 0.011019256, 0.425492283, 0.120803355, 0.626742976, 0.827005067, 0.129506062, 0.015004486, 0.121962032, 0.324096067, 0.046142867, 0.075829998, 0.939372077, 0.053734168, 0.226160564, 0.035463394, 0.007600592, 0.084871959, 0.565510846, 0.001036508, 0.348161938, 0.117926647, 0.473065421, 0.680158234, 0.267124078, 0.022393222, 0.070380033, 0.237967927, 0.021768596, 0.104700447, 0.836981531, 0.004532359, 0.1859206 ) # p-values
+
+# Apply the Benjamini-Hochberg procedure
+adjusted_pvalues <- p.adjust(pvalues, method = "BH")
+
+# Print the adjusted p-values
+print(adjusted_pvalues)
+
+# Install Bioconductor if you haven't already
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# Use Bioconductor to install the qvalue package
+BiocManager::install("qvalue")
+
+# Load the qvalue package
+library(qvalue)
 
 
+# Calculate q-values
+qvalues <- qvalue(pvalues)$qvalues
+
+# Print the q-values
+print(qvalues)
 
 
+```
+
+```{r}
+#Re-do interaction test for VBs
+library(lmerTest)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv')
+
+# Fit the model -- factor all factor variables
+factor_vars <- c("AlcoholY08", "SmokingY08", "Assessment_0", "EID")
+for (var in factor_vars) {
+  df[[var]] <- as.factor(df[[var]])
+}
+rm(factor_vars,var)
+
+# Scale all continuous variables
+scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "Alcohol_continuous_mean", "Starch_mean", "Calcium_mean", "VE_mean", 
+               "rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", "rsfMRI_Component10", 
+               "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20", "Age_Baseline", "BMI_Y08andY12andY14_mean")
 
 
+for (var in scale_vars) {
+  df[[var]] <- scale(df[[var]])
+}
+rm(scale_vars, var)
+
+# Define the dependent variables
+dependent_vars <- c("rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", 
+                    "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20")
+
+# List of variables to test
+test_vars <- c("VB6_mean", "VB12_mean", "Folate_mean")
+
+# List of factors
+factor_vars <- c("APOE_all", "T40_Gcar", "family_history_AD")
+
+# Initialize a results data frame
+results <- data.frame()
+
+# Loop over each dependent variable
+for(factor_var in factor_vars) {
+ for (dep_var in dependent_vars) {
+  for (test_var in test_vars) {
+      
+    # Construct the formula
+    formula <- as.formula(paste(dep_var, "~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                               BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend +",test_var,"+", factor_var, ":", test_var, "+ 
+                               (1 | Assessment_0)"))
+  
+    # Fit the model
+    model <- lmer(formula, data = df, REML=FALSE)
+
+ # Get the summary
+    model_summary <- summary(model)
+   
+    # Extract the results for the interaction term
+    interaction_term <- paste(factor_var, test_var, sep=":")
+    estimate <- model_summary$coefficients[interaction_term, "Estimate"]
+    std_error <- model_summary$coefficients[interaction_term, "Std. Error"]
+    p_value <- model_summary$coefficients[interaction_term, "Pr(>|t|)"]
+
+    # Add the results to the data frame
+    results <- rbind(results, data.frame(Dependent_Variable = dep_var,
+                                         Factors = factor_var,
+                                         Test_Variable = test_var,
+                                         Estimate = estimate,
+                                         Std_Error = std_error,
+                                         P_Value = p_value))
+    }
+  }
+}
+write.csv(results, "C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\output\\VBs\\results\\interactions_VBs.csv",na='',row.names=FALSE)
+rm(list=ls())
+```
+
+```{r}
+#Re-do interaction test for significant figures
+library(lmerTest)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv')
+
+# Fit the model -- factor all factor variables
+factor_vars <- c("AlcoholY08", "SmokingY08", "Assessment_0", "EID")
+for (var in factor_vars) {
+  df[[var]] <- as.factor(df[[var]])
+}
+rm(factor_vars,var)
+
+# Scale all continuous variables
+scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "Alcohol_continuous_mean", "Starch_mean", "Calcium_mean", "VE_mean", 
+               "rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", "rsfMRI_Component10", 
+               "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20", "Age_Baseline", "BMI_Y08andY12andY14_mean")
+
+
+for (var in scale_vars) {
+  df[[var]] <- scale(df[[var]])
+}
+rm(scale_vars, var)
+
+    # Fit the model
+   
+model <- lmer(rsfMRI_Component1 ~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                               BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend + Folate_mean + APOE_all:Folate_mean + 
+                               (1 | Assessment_0), data = df, REML=FALSE)
+
+# Identify the rows used in the model
+model_rows <- complete.cases(model.frame(model))
+
+# Initialize a vector for predicted values
+predicted_values_full <- rep(NA, nrow(df))
+
+# Generate predicted values only for the rows used in the model
+predicted_values_full[model_rows] <- predict(model, re.form = NA)
+
+# Add the predicted values to df
+df$predicted_values <- predicted_values_full
+
+library(ggplot2)
+# Assuming df is your data frame with the variables: Folate_mean, predicted values, and APOE_all
+# Let's say the predicted values column in df is named "predicted_rsfMRI_Component1"
+if (!requireNamespace("ggthemes", quietly = TRUE))
+    install.packages("ggthemes")
+
+library(ggthemes)  # for Calibri font
+
+# Filter out rows where APOE_all is NA
+df_filtered <- df[!is.na(df$APOE_all), ]
+
+
+# Create the plot with the filtered data
+
+p <- ggplot(df_filtered, aes(x = Folate_mean, y = predicted_values)) +
+  geom_point(aes(color = as.factor(APOE_all), fill = as.factor(APOE_all)), shape = 21, size = 24, stroke=2) +
+  geom_smooth(data = subset(df_filtered, APOE_all == 0), method = "lm", aes(color = as.factor(APOE_all)), size = 5, se = FALSE, fullrange = TRUE, color = "#56B4E9") +
+  geom_smooth(data = subset(df_filtered, APOE_all == 1), method = "lm", aes(color = as.factor(APOE_all)), size = 5, se = FALSE, fullrange = TRUE, color = "#CC79A7") +
+  labs(
+    title = "Anterior and Posterior Default Mode Network (IC1)",
+    x = "Vitamin B9 (Folate) intake",
+    y = "Network Connectivity Strength (Z-score)",
+    color = "APOE4 Status",  # Legend title for border color
+    fill = "APOE4 Status"    # Legend title for fill color
+  ) +
+  scale_fill_manual(values = c("0" = "#56B4E9", "1" = "#CC79A7"), labels = c("0" = "Negative", "1" = "Positive")) +
+  scale_color_manual(values = c("0" = "#0000CC", "1" = "#9900CC"), labels = c("0" = "Negative", "1" = "Positive")) +
+  theme_minimal() +
+  theme(
+    text = element_text(size = 48, family = "Calibri"),
+    axis.title = element_text(size = 60, family = "Calibri"),
+    plot.title = element_text(size = 60, hjust = 0.5),
+    axis.text = element_text(size = 60),  # Increase axis text size
+    panel.border = element_rect(colour = "black", fill = NA, size = 10),
+    axis.ticks = element_line(size = 10),
+    axis.ticks.length = unit(48, "pt"),
+    legend.text = element_text(size = 48),
+    legend.position = c(0.8, 0.8),
+    legend.background = element_blank(),
+    legend.key = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+file_path <- "C:/Users/timothy/OneDrive/Documents/ISU/food_project/output/VBs/figures/R/interaction_VB9_APOE_IC1.tiff"  # Change this to your desired file path
+
+# Save the plot to the specified location
+ggsave(file_path, plot = p, width = 22.22, height = 27.78, units = "in", dpi = 72)
+
+rm(list=ls())
+```
