@@ -1600,7 +1600,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "Alcohol_continuous_mean
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -1671,7 +1671,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rs
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -1702,20 +1702,20 @@ if (!requireNamespace("ggthemes", quietly = TRUE))
 library(ggthemes)  # for Calibri font
 
 # Filter out rows where Family_history_AD is NA
-df_filtered <- df[!is.na(df$Family_history_AD), ]
+df_filtered <- df[!is.na(df$family_history_AD), ]
 
 # Create the plot with the filtered data
 
 p <- ggplot(df_filtered, aes(x = Folate_mean, y = predicted_values)) +
-  geom_point(aes(color = as.factor(Family_history_AD), fill = as.factor(Family_history_AD)), shape = 21, size = 24, stroke=2) +
-  geom_smooth(data = subset(df_filtered, Family_history_AD == 0), method = "lm", aes(color = as.factor(Family_history_AD)), size = 5, se = FALSE, fullrange = TRUE, color = "#56B4E9") +
-  geom_smooth(data = subset(df_filtered, Family_history_AD == 1), method = "lm", aes(color = as.factor(Family_history_AD)), size = 5, se = FALSE, fullrange = TRUE, color = "#CC79A7") +
+  geom_point(aes(color = as.factor(family_history_AD), fill = as.factor(family_history_AD)), shape = 21, size = 24, stroke=2) +
+  geom_smooth(data = subset(df_filtered, family_history_AD == 0), method = "lm", aes(color = as.factor(family_history_AD)), size = 5, se = FALSE, fullrange = TRUE, color = "#56B4E9") +
+  geom_smooth(data = subset(df_filtered, family_history_AD == 1), method = "lm", aes(color = as.factor(family_history_AD)), size = 5, se = FALSE, fullrange = TRUE, color = "#CC79A7") +
   labs(
     title = "Anterior and Posterior Default Mode Network (IC1)",
     x = "Vitamin B9 (Folate) intake",
     y = "Network Connectivity Strength (Z-score)",
-    color = "APOE4 Status",  # Legend title for border color
-    fill = "APOE4 Status"    # Legend title for fill color
+    color = "family history Status",  # Legend title for border color
+    fill = "family history Status"    # Legend title for fill color
   ) +
   scale_fill_manual(values = c("0" = "#56B4E9", "1" = "#CC79A7"), labels = c("0" = "Negative", "1" = "Positive")) +
   scale_color_manual(values = c("0" = "#0000CC", "1" = "#9900CC"), labels = c("0" = "Negative", "1" = "Positive")) +
@@ -1765,7 +1765,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rs
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -1875,7 +1875,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rs
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -1981,7 +1981,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rs
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -2087,7 +2087,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rs
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -2194,7 +2194,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rs
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -2300,7 +2300,7 @@ rm(factor_vars,var)
 scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20", "Age_Baseline", "BMI_Y08andY12andY14_mean")
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -2407,7 +2407,7 @@ scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rs
 
 
 for (var in scale_vars) {
-  df[[var]] <- scale(df[[var]])
+  df[[var]] <- as.numeric(df[[var]])
 }
 rm(scale_vars, var)
 
@@ -2491,4 +2491,105 @@ for (dep_var in dependent_vars) {
 
 # Clearing the workspace
 rm(list = ls())
+```
+
+```{r}
+#trouble shooting interaction test for significant figures
+
+# example -- IC1 with Folate on FH
+library(lmerTest)
+df<-read.csv(file = 'C:\\Users\\timothy\\OneDrive\\Documents\\ISU\\food_project\\data\\data_for_test\\food_continuous.csv')
+
+# Fit the model -- factor all factor variables
+factor_vars <- c("AlcoholY08", "SmokingY08", "Assessment_0", "EID", "APOE_all", "T40_Gcar", "family_history_AD", "Sex")
+for (var in factor_vars) {
+  df[[var]] <- as.factor(df[[var]])
+}
+rm(factor_vars,var)
+
+# Scale all continuous variables
+scale_vars <- c("VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20", "Age_Baseline", "BMI_Y08andY12andY14_mean")
+
+
+for (var in scale_vars) {
+  df[[var]] <- as.numeric(df[[var]])
+}
+rm(scale_vars, var)
+# exclude cases with NA (missing) values
+
+vars_of_interest <- c("AlcoholY08", "SmokingY08", "Assessment_0", "EID", "APOE_all", "T40_Gcar", "family_history_AD", "Sex", "VB6_mean", "VB12_mean", "Folate_mean", "rsfMRI_Component1", "rsfMRI_Component5", "rsfMRI_Component7", "rsfMRI_Component9", "rsfMRI_Component10", "rsfMRI_Component13", "rsfMRI_Component14", "rsfMRI_Component20", "Age_Baseline", "BMI_Y08andY12andY14_mean", "Townsend")
+
+df_no_na <- df[!apply(df[vars_of_interest], 1, function(x) any(is.na(x))), ]
+
+
+
+
+
+    # Fit the model
+   
+model <- lmer(rsfMRI_Component1 ~ APOE_all + T40_Gcar + family_history_AD + Age_Baseline + Sex + 
+                               BMI_Y08andY12andY14_mean + AlcoholY08 + SmokingY08 + Townsend + Folate_mean + family_history_AD:Folate_mean + 
+                               (1 | Assessment_0), data = df, REML=FALSE)
+
+# Identify the rows used in the model
+model_rows <- complete.cases(model.frame(model))
+
+# Initialize a vector for predicted values
+predicted_values_full <- rep(NA, nrow(df))
+
+# Generate predicted values only for the rows used in the model
+predicted_values_full[model_rows] <- predict(model, re.form = NA)
+
+# Add the predicted values to df
+df$predicted_values <- predicted_values_full
+
+library(ggplot2)
+# Assuming df is your data frame with the variables: Folate_mean, predicted values, and Family_history_AD
+# Let's say the predicted values column in df is named "predicted_rsfMRI_Component1"
+if (!requireNamespace("ggthemes", quietly = TRUE))
+    install.packages("ggthemes")
+
+library(ggthemes)  # for Calibri font
+
+# Filter out rows where Family_history_AD is NA
+df_filtered <- df[!is.na(df$Family_history_AD), ]
+
+# Create the plot with the filtered data
+
+p <- ggplot(df_filtered, aes(x = Folate_mean, y = predicted_values)) +
+  geom_point(aes(color = as.factor(Family_history_AD), fill = as.factor(Family_history_AD)), shape = 21, size = 24, stroke=2) +
+  geom_smooth(data = subset(df_filtered, Family_history_AD == 0), method = "lm", aes(color = as.factor(Family_history_AD)), size = 5, se = FALSE, fullrange = TRUE, color = "#56B4E9") +
+  geom_smooth(data = subset(df_filtered, Family_history_AD == 1), method = "lm", aes(color = as.factor(Family_history_AD)), size = 5, se = FALSE, fullrange = TRUE, color = "#CC79A7") +
+  labs(
+    title = "Anterior and Posterior Default Mode Network (IC1)",
+    x = "Vitamin B9 (Folate) intake",
+    y = "Network Connectivity Strength (Z-score)",
+    color = "APOE4 Status",  # Legend title for border color
+    fill = "APOE4 Status"    # Legend title for fill color
+  ) +
+  scale_fill_manual(values = c("0" = "#56B4E9", "1" = "#CC79A7"), labels = c("0" = "Negative", "1" = "Positive")) +
+  scale_color_manual(values = c("0" = "#0000CC", "1" = "#9900CC"), labels = c("0" = "Negative", "1" = "Positive")) +
+  theme_minimal() +
+  theme(
+    text = element_text(size = 48, family = "Calibri"),
+    axis.title = element_text(size = 60, family = "Calibri"),
+    plot.title = element_text(size = 60, hjust = 0.5),
+    axis.text = element_text(size = 60),  # Increase axis text size
+    panel.border = element_rect(colour = "black", fill = NA, size = 10),
+    axis.ticks = element_line(size = 10),
+    axis.ticks.length = unit(48, "pt"),
+    legend.text = element_text(size = 48),
+    legend.position = c(0.8, 0.8),
+    legend.background = element_blank(),
+    legend.key = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+file_path <- "C:/Users/timothy/OneDrive/Documents/ISU/food_project/output/VBs/figures/R/interaction_VB9_FH_IC1.tiff"  # Change this to your desired file path
+
+# Save the plot to the specified location
+ggsave(file_path, plot = p, width = 22.22, height = 27.78, units = "in", dpi = 72)
+
+rm(list=ls())
 ```
